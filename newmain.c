@@ -11,11 +11,9 @@
 #pragma config CP = OFF 
 #define _XTAL_FREQ 20000000
 
-
 #define Blue_LED_ON    49
 #define Blue_LED_OFF   50
 #define Yellow_Toggle  51
-
 
 void UART_RX_Init()
 {
@@ -37,23 +35,22 @@ void UART_RX_Init()
  
 void UART_Init()
 {
+    
     TXSTA = 0x20; //BRGH=0, TXEN = 1, Asynchronous Mode, 8-bit mode
     RCSTA = 0b10010000; //Serial Port enabled,8-bit reception
-    SPBRG = 32;           //9600 baudrate for 11.0592Mhz
-    TXIF = 0;
-    RCIF = 0;
-    RCIE = 1;  // UART Receving Interrupt Enable Bit
-    PEIE = 1;  // Peripherals Interrupt Enable Bit  
-    GIE = 1;   // Global Interrupt Enable Bit
+    SPBRG = 32;           //9600 baudrate for 20Mhz
+    INTCON = 0xC0;
+    PIE1 = 0x20;
 }
     
-void UART_Transmit_Char(unsigned char a)
+void UART_Transmit_Char(uint8_t a)
 {
     TXREG=a;
     while(!TXIF);
     TXIF = 0;
 }
-void UART_Transmit_String(unsigned char *a,int size)
+
+void UART_Transmit_String(uint8_t *a,int size)
 {
     for(int i = 0; i < size; i++){
         UART_Transmit_Char(a[i]);
@@ -68,11 +65,15 @@ unsigned char UART_Receive()
     return RCREG;
 }
 
-uint8_t UART_RX_Buffer = 0;
+uint8_t UART_RX_Buffer = 0x33;
 void __interrupt() ISR(){
-    if(PIR1bits.RCIF == 1){
-        UART_RX_Buffer = RCREG;
-        PIR1bits.RCIF;
+    if(RCIF == 1){
+        UART_RX_Buffer = UART_Receive();
+        if(UART_RX_Buffer == 'a' & PORTB == 0xFF)
+            PORTB=0x00;
+        if(UART_RX_Buffer == 'b' & PORTB == 0x00)
+            PORTB=0xff;
+        RCIF = 0;
     }
 }
 
@@ -81,13 +82,13 @@ char *str = "Hello World";
 void main(void) {
   TRISC6=1;
   TRISC7=1;
-  TRISD=0;              //Port D is act as Output
-  unsigned char get;
-  UART_Init();  //---------------------------
+  TRISB = 0X00;
+  PORTB = 0x00;
+  UART_Init();
   while(1)
   {
-      UART_Transmit_String(str,10);
+    UART_Transmit_Char(UART_RX_Buffer);
     __delay_ms(3000);
   }
-
+  
 }

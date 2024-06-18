@@ -1873,8 +1873,6 @@ extern __bank0 __bit __timeout;
 
 
 
-
-
 void UART_RX_Init()
 {
   BRGH = 1;
@@ -1895,23 +1893,22 @@ void UART_RX_Init()
 
 void UART_Init()
 {
+
     TXSTA = 0x20;
     RCSTA = 0b10010000;
     SPBRG = 32;
-    TXIF = 0;
-    RCIF = 0;
-    RCIE = 1;
-    PEIE = 1;
-    GIE = 1;
+    INTCON = 0xC0;
+    PIE1 = 0x20;
 }
 
-void UART_Transmit_Char(unsigned char a)
+void UART_Transmit_Char(uint8_t a)
 {
     TXREG=a;
     while(!TXIF);
     TXIF = 0;
 }
-void UART_Transmit_String(unsigned char *a,int size)
+
+void UART_Transmit_String(uint8_t *a,int size)
 {
     for(int i = 0; i < size; i++){
         UART_Transmit_Char(a[i]);
@@ -1926,25 +1923,29 @@ unsigned char UART_Receive()
     return RCREG;
 }
 
-uint8_t UART_RX_Buffer = 0;
+uint8_t UART_RX_Buffer = 0x33;
 void __attribute__((picinterrupt(("")))) ISR(){
-    if(PIR1bits.RCIF == 1){
-        UART_RX_Buffer = RCREG;
-        PIR1bits.RCIF;
+    if(RCIF == 1){
+        UART_RX_Buffer = UART_Receive();
+        if(UART_RX_Buffer == 'a' & PORTB == 0xFF)
+            PORTB=0x00;
+        if(UART_RX_Buffer == 'b' & PORTB == 0x00)
+            PORTB=0xff;
+        RCIF = 0;
     }
 }
 
-char *str = "Ola Mundo";
+char *str = "Hello World";
 
 void main(void) {
   TRISC6=1;
   TRISC7=1;
-  TRISD=0;
-  unsigned char get;
+  TRISB = 0X00;
+  PORTB = 0x00;
   UART_Init();
   while(1)
   {
-      UART_Transmit_String(str,10);
+    UART_Transmit_Char(UART_RX_Buffer);
     _delay((unsigned long)((3000)*(20000000/4000.0)));
   }
 
