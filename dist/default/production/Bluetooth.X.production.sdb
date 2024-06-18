@@ -11,15 +11,29 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"40 C:\Users\xboxw\MPLABXProjects\Bluetooth.X\newmain.c
-[v _ser_int ser_int `(v  1 e 1 0 ]
-"48
-[v _tx tx `(v  1 e 1 0 ]
-"54
-[v _tx_string tx_string `(v  1 e 1 0 ]
-"71
+"38 C:\Users\xboxw\MPLABXProjects\Bluetooth.X\newmain.c
+[v _UART_Init UART_Init `(v  1 e 1 0 ]
+"50
+[v _UART_Transmit_Char UART_Transmit_Char `(v  1 e 1 0 ]
+"56
+[v _UART_Transmit_String UART_Transmit_String `(v  1 e 1 0 ]
+"72
+[v _ISR ISR `II(v  1 e 1 0 ]
+"81
 [v _main main `(v  1 e 1 0 ]
-"964 C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h
+[s S44 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+"549 C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h
+[u S53 . 1 `S44 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES53  1 e 1 @12 ]
+"964
 [v _RCSTA RCSTA `VEuc  1 e 1 @24 ]
 "1059
 [v _TXREG TXREG `VEuc  1 e 1 @25 ]
@@ -54,34 +68,41 @@
 "3041
 [v _TXIF TXIF `VEb  1 e 0 @100 ]
 "71 C:\Users\xboxw\MPLABXProjects\Bluetooth.X\newmain.c
+[v _UART_RX_Buffer UART_RX_Buffer `uc  1 e 1 0 ]
+"81
 [v _main main `(v  1 e 1 0 ]
 {
-"83
+"93
 } 0
-"54
-[v _tx_string tx_string `(v  1 e 1 0 ]
+"56
+[v _UART_Transmit_String UART_Transmit_String `(v  1 e 1 0 ]
 {
-[v tx_string@a a `*.24uc  1 a 1 wreg ]
+[v UART_Transmit_String@a a `*.24uc  1 a 1 wreg ]
+"58
+[v UART_Transmit_String@i i `i  1 a 2 8 ]
 "56
-[v tx_string@i i `i  1 a 2 6 ]
-"54
-[v tx_string@a a `*.24uc  1 a 1 wreg ]
-[v tx_string@size size `i  1 p 2 1 ]
-"56
-[v tx_string@a a `*.24uc  1 a 1 5 ]
-"60
+[v UART_Transmit_String@a a `*.24uc  1 a 1 wreg ]
+[v UART_Transmit_String@size size `i  1 p 2 3 ]
+"58
+[v UART_Transmit_String@a a `*.24uc  1 a 1 7 ]
+"62
 } 0
-"48
-[v _tx tx `(v  1 e 1 0 ]
-{
-[v tx@a a `uc  1 a 1 wreg ]
-[v tx@a a `uc  1 a 1 wreg ]
 "50
-[v tx@a a `uc  1 a 1 0 ]
-"53
-} 0
-"40
-[v _ser_int ser_int `(v  1 e 1 0 ]
+[v _UART_Transmit_Char UART_Transmit_Char `(v  1 e 1 0 ]
 {
-"46
+[v UART_Transmit_Char@a a `uc  1 a 1 wreg ]
+[v UART_Transmit_Char@a a `uc  1 a 1 wreg ]
+"52
+[v UART_Transmit_Char@a a `uc  1 a 1 2 ]
+"55
+} 0
+"38
+[v _UART_Init UART_Init `(v  1 e 1 0 ]
+{
+"48
+} 0
+"72
+[v _ISR ISR `II(v  1 e 1 0 ]
+{
+"77
 } 0

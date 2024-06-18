@@ -17,8 +17,6 @@
 #define Yellow_Toggle  51
 
 
-uint8_t UART_Buffer = 0;
-
 void UART_RX_Init()
 {
   BRGH = 1; // Set For High-Speed Baud Rate
@@ -37,46 +35,58 @@ void UART_RX_Init()
   CREN = 1; // Enable Data Continous Reception
 }
  
-void ser_int()
+void UART_Init()
 {
-    TXSTA=0x20; //BRGH=0, TXEN = 1, Asynchronous Mode, 8-bit mode
-    RCSTA=0b10010000; //Serial Port enabled,8-bit reception
-    SPBRG=32;           //9600 baudrate for 11.0592Mhz
-    TXIF=RCIF=0;
+    TXSTA = 0x20; //BRGH=0, TXEN = 1, Asynchronous Mode, 8-bit mode
+    RCSTA = 0b10010000; //Serial Port enabled,8-bit reception
+    SPBRG = 32;           //9600 baudrate for 11.0592Mhz
+    TXIF = 0;
+    RCIF = 0;
+    RCIE = 1;  // UART Receving Interrupt Enable Bit
+    PEIE = 1;  // Peripherals Interrupt Enable Bit  
+    GIE = 1;   // Global Interrupt Enable Bit
 }
     
-void tx(unsigned char a)
+void UART_Transmit_Char(unsigned char a)
 {
     TXREG=a;
     while(!TXIF);
     TXIF = 0;
 }
-void tx_string(unsigned char *a,int size)
+void UART_Transmit_String(unsigned char *a,int size)
 {
     for(int i = 0; i < size; i++){
-        tx(a[i]);
+        UART_Transmit_Char(a[i]);
         __delay_ms(1);
     }
 }
 
-unsigned char rx()
+unsigned char UART_Receive()
 {
     while(!RCIF);
     RCIF=0;
     return RCREG;
 }
 
-char *str = "Ola Mundo";
+uint8_t UART_RX_Buffer = 0;
+void __interrupt() ISR(){
+    if(PIR1bits.RCIF == 1){
+        UART_RX_Buffer = RCREG;
+        PIR1bits.RCIF;
+    }
+}
+
+char *str = "Hello World";
 
 void main(void) {
   TRISC6=1;
   TRISC7=1;
   TRISD=0;              //Port D is act as Output
   unsigned char get;
-  ser_int();  //---------------------------
+  UART_Init();  //---------------------------
   while(1)
   {
-      tx_string(str,10);
+      UART_Transmit_String(str,10);
     __delay_ms(3000);
   }
 

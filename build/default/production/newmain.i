@@ -1875,8 +1875,6 @@ extern __bank0 __bit __timeout;
 
 
 
-uint8_t UART_Buffer = 0;
-
 void UART_RX_Init()
 {
   BRGH = 1;
@@ -1895,33 +1893,45 @@ void UART_RX_Init()
   CREN = 1;
 }
 
-void ser_int()
+void UART_Init()
 {
-    TXSTA=0x20;
-    RCSTA=0b10010000;
-    SPBRG=32;
-    TXIF=RCIF=0;
+    TXSTA = 0x20;
+    RCSTA = 0b10010000;
+    SPBRG = 32;
+    TXIF = 0;
+    RCIF = 0;
+    RCIE = 1;
+    PEIE = 1;
+    GIE = 1;
 }
 
-void tx(unsigned char a)
+void UART_Transmit_Char(unsigned char a)
 {
     TXREG=a;
     while(!TXIF);
     TXIF = 0;
 }
-void tx_string(unsigned char *a,int size)
+void UART_Transmit_String(unsigned char *a,int size)
 {
     for(int i = 0; i < size; i++){
-        tx(a[i]);
+        UART_Transmit_Char(a[i]);
         _delay((unsigned long)((1)*(20000000/4000.0)));
     }
 }
 
-unsigned char rx()
+unsigned char UART_Receive()
 {
     while(!RCIF);
     RCIF=0;
     return RCREG;
+}
+
+uint8_t UART_RX_Buffer = 0;
+void __attribute__((picinterrupt(("")))) ISR(){
+    if(PIR1bits.RCIF == 1){
+        UART_RX_Buffer = RCREG;
+        PIR1bits.RCIF;
+    }
 }
 
 char *str = "Ola Mundo";
@@ -1931,10 +1941,10 @@ void main(void) {
   TRISC7=1;
   TRISD=0;
   unsigned char get;
-  ser_int();
+  UART_Init();
   while(1)
   {
-      tx_string(str,10);
+      UART_Transmit_String(str,10);
     _delay((unsigned long)((3000)*(20000000/4000.0)));
   }
 

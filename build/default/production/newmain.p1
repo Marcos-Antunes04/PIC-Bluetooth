@@ -51,6 +51,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 "1066 C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h: 1066: extern volatile unsigned char RCREG __attribute__((address(0x01A)));
 [v _RCREG `Vuc ~T0 @X0 0 e@26 ]
+[t ~ __interrupt . k ]
+[t T1 __interrupt ]
+"538
+[; ;C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h: 538:     struct {
+[s S21 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S21 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF PSPIF ]
+"537
+[; ;C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h: 537: typedef union {
+[u S20 `S21 1 ]
+[n S20 . . ]
+"549
+[; ;C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h: 549: extern volatile PIR1bits_t PIR1bits __attribute__((address(0x00C)));
+[v _PIR1bits `VS20 ~T0 @X0 0 e@12 ]
 [p mainexit ]
 "1499
 [; ;C:/Program Files/Microchip/MPLABX/v6.10/packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\include\proc\pic16f877a.h: 1499: extern volatile unsigned char TRISD __attribute__((address(0x088)));
@@ -245,224 +258,261 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;newmain.c: 6: 
 [p x PWRTE  =  OFF  ]
 "7
-[; ;newmain.c: 7: uint8_t UART_Buffer = 0;
+[; ;newmain.c: 7: void UART_RX_Init()
 [p x BOREN  =  ON ]
 "8
-[; ;newmain.c: 8: 
+[; ;newmain.c: 8: {
 [p x LVP  =  OFF  ]
 "9
-[; ;newmain.c: 9: void UART_RX_Init()
+[; ;newmain.c: 9:   BRGH = 1;
 [p x CPD  =  OFF  ]
 "10
-[; ;newmain.c: 10: {
+[; ;newmain.c: 10:   SPBRG = 25;
 [p x WRT  =  OFF  ]
 "11
-[; ;newmain.c: 11:   BRGH = 1;
+[; ;newmain.c: 11: 
 [p x CP  =  OFF  ]
 "20
-[; ;newmain.c: 20:   RCIE = 1;
-[v _UART_Buffer `uc ~T0 @X0 1 e ]
-[i _UART_Buffer
--> -> 0 `i `uc
-]
-"22
-[; ;newmain.c: 22:   GIE = 1;
+[; ;newmain.c: 20:   GIE = 1;
 [v _UART_RX_Init `(v ~T0 @X0 1 ef ]
-"23
-[; ;newmain.c: 23: 
+"21
+[; ;newmain.c: 21: 
 {
 [e :U _UART_RX_Init ]
 [f ]
-"24
-[; ;newmain.c: 24:   CREN = 1;
+"22
+[; ;newmain.c: 22:   CREN = 1;
 [e = _BRGH -> -> 1 `i `b ]
-"25
-[; ;newmain.c: 25: }
+"23
+[; ;newmain.c: 23: }
 [e = _SPBRG -> -> 25 `i `uc ]
-"27
-[; ;newmain.c: 27: void ser_int()
+"25
+[; ;newmain.c: 25: void UART_Init()
 [e = _SYNC -> -> 0 `i `b ]
-"28
-[; ;newmain.c: 28: {
+"26
+[; ;newmain.c: 26: {
 [e = _SPEN -> -> 1 `i `b ]
-"30
-[; ;newmain.c: 30:     RCSTA=0b10010000;
+"28
+[; ;newmain.c: 28:     RCSTA = 0b10010000;
 [e = _TRISC6 -> -> 1 `i `b ]
-"31
-[; ;newmain.c: 31:     SPBRG=32;
+"29
+[; ;newmain.c: 29:     SPBRG = 32;
 [e = _TRISC7 -> -> 1 `i `b ]
-"33
-[; ;newmain.c: 33: }
+"31
+[; ;newmain.c: 31:     RCIF = 0;
 [e = _RCIE -> -> 1 `i `b ]
-"34
-[; ;newmain.c: 34: 
+"32
+[; ;newmain.c: 32:     RCIE = 1;
 [e = _PEIE -> -> 1 `i `b ]
-"35
-[; ;newmain.c: 35: void tx(unsigned char a)
+"33
+[; ;newmain.c: 33:     PEIE = 1;
 [e = _GIE -> -> 1 `i `b ]
-"37
-[; ;newmain.c: 37:     TXREG=a;
+"35
+[; ;newmain.c: 35: }
 [e = _CREN -> -> 1 `i `b ]
-"38
-[; ;newmain.c: 38:     while(!TXIF);
+"36
+[; ;newmain.c: 36: 
 [e :UE 95 ]
 }
-"40
-[; ;newmain.c: 40: }
-[v _ser_int `(v ~T0 @X0 1 ef ]
-"41
-[; ;newmain.c: 41: void tx_string(unsigned char *a,int size)
+"38
+[; ;newmain.c: 38: {
+[v _UART_Init `(v ~T0 @X0 1 ef ]
+"39
+[; ;newmain.c: 39:     TXREG=a;
 {
-[e :U _ser_int ]
+[e :U _UART_Init ]
 [f ]
-"42
-[; ;newmain.c: 42: {
+"40
+[; ;newmain.c: 40:     while(!TXIF);
 [e = _TXSTA -> -> 32 `i `uc ]
-"43
-[; ;newmain.c: 43:     for(int i = 0; i < size; i++){
+"41
+[; ;newmain.c: 41:     TXIF = 0;
 [e = _RCSTA -> -> 144 `i `uc ]
-"44
-[; ;newmain.c: 44:         tx(a[i]);
+"42
+[; ;newmain.c: 42: }
 [e = _SPBRG -> -> 32 `i `uc ]
+"43
+[; ;newmain.c: 43: void UART_Transmit_String(unsigned char *a,int size)
+[e = _TXIF -> -> 0 `i `b ]
+"44
+[; ;newmain.c: 44: {
+[e = _RCIF -> -> 0 `i `b ]
 "45
-[; ;newmain.c: 45:         _delay((unsigned long)((1)*(20000000/4000.0)));
-[e = _TXIF -> = _RCIF -> -> 0 `i `b `b ]
+[; ;newmain.c: 45:     for(int i = 0; i < size; i++){
+[e = _RCIE -> -> 1 `i `b ]
 "46
-[; ;newmain.c: 46:     }
+[; ;newmain.c: 46:         UART_Transmit_Char(a[i]);
+[e = _PEIE -> -> 1 `i `b ]
+"47
+[; ;newmain.c: 47:         _delay((unsigned long)((1)*(20000000/4000.0)));
+[e = _GIE -> -> 1 `i `b ]
+"48
+[; ;newmain.c: 48:     }
 [e :UE 96 ]
 }
-"48
-[; ;newmain.c: 48: 
-[v _tx `(v ~T0 @X0 1 ef1`uc ]
-"49
-[; ;newmain.c: 49: unsigned char rx()
-{
-[e :U _tx ]
-"48
-[; ;newmain.c: 48: 
-[v _a `uc ~T0 @X0 1 r1 ]
-"49
-[; ;newmain.c: 49: unsigned char rx()
-[f ]
 "50
-[; ;newmain.c: 50: {
-[e = _TXREG _a ]
+[; ;newmain.c: 50: 
+[v _UART_Transmit_Char `(v ~T0 @X0 1 ef1`uc ]
 "51
-[; ;newmain.c: 51:     while(!RCIF);
+[; ;newmain.c: 51: unsigned char UART_Receive()
+{
+[e :U _UART_Transmit_Char ]
+"50
+[; ;newmain.c: 50: 
+[v _a `uc ~T0 @X0 1 r1 ]
+"51
+[; ;newmain.c: 51: unsigned char UART_Receive()
+[f ]
+"52
+[; ;newmain.c: 52: {
+[e = _TXREG _a ]
+"53
+[; ;newmain.c: 53:     while(!RCIF);
 [e $U 98  ]
 [e :U 99 ]
 [e :U 98 ]
 [e $ ! _TXIF 99  ]
 [e :U 100 ]
-"52
-[; ;newmain.c: 52:     RCIF=0;
+"54
+[; ;newmain.c: 54:     RCIF=0;
 [e = _TXIF -> -> 0 `i `b ]
-"53
-[; ;newmain.c: 53:     return RCREG;
+"55
+[; ;newmain.c: 55:     return RCREG;
 [e :UE 97 ]
 }
-"54
-[; ;newmain.c: 54: }
-[v _tx_string `(v ~T0 @X0 1 ef2`*uc`i ]
-"55
-[; ;newmain.c: 55: 
+"56
+[; ;newmain.c: 56: }
+[v _UART_Transmit_String `(v ~T0 @X0 1 ef2`*uc`i ]
+"57
+[; ;newmain.c: 57: 
 {
-[e :U _tx_string ]
-"54
-[; ;newmain.c: 54: }
+[e :U _UART_Transmit_String ]
+"56
+[; ;newmain.c: 56: }
 [v _a `*uc ~T0 @X0 1 r1 ]
 [v _size `i ~T0 @X0 1 r2 ]
-"55
-[; ;newmain.c: 55: 
+"57
+[; ;newmain.c: 57: 
 [f ]
-"56
-[; ;newmain.c: 56: char *str = "Ola Mundo";
+"58
+[; ;newmain.c: 58: uint8_t UART_RX_Buffer = 0;
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
 [e $U 105  ]
 [e :U 102 ]
 {
-"57
-[; ;newmain.c: 57: 
-[e ( _tx (1 *U + _a * -> _i `x -> -> # *U _a `i `x ]
-"58
-[; ;newmain.c: 58: void main(void) {
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "59
-[; ;newmain.c: 59:   TRISC6=1;
+[; ;newmain.c: 59: void __attribute__((picinterrupt(("")))) ISR(){
+[e ( _UART_Transmit_Char (1 *U + _a * -> _i `x -> -> # *U _a `i `x ]
+"60
+[; ;newmain.c: 60:     if(PIR1bits.RCIF == 1){
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"61
+[; ;newmain.c: 61:         UART_RX_Buffer = RCREG;
 }
 [e ++ _i -> 1 `i ]
 [e :U 105 ]
 [e $ < _i _size 102  ]
 [e :U 103 ]
 }
-"60
-[; ;newmain.c: 60:   TRISC7=1;
+"62
+[; ;newmain.c: 62:         PIR1bits.RCIF;
 [e :UE 101 ]
 }
-"62
-[; ;newmain.c: 62:   unsigned char get;
-[v _rx `(uc ~T0 @X0 1 ef ]
-"63
-[; ;newmain.c: 63:   ser_int();
-{
-[e :U _rx ]
-[f ]
 "64
-[; ;newmain.c: 64:   while(1)
+[; ;newmain.c: 64: }
+[v _UART_Receive `(uc ~T0 @X0 1 ef ]
+"65
+[; ;newmain.c: 65: 
+{
+[e :U _UART_Receive ]
+[f ]
+"66
+[; ;newmain.c: 66: char *str = "Ola Mundo";
 [e $U 107  ]
 [e :U 108 ]
 [e :U 107 ]
 [e $ ! _RCIF 108  ]
 [e :U 109 ]
-"65
-[; ;newmain.c: 65:   {
+"67
+[; ;newmain.c: 67: 
 [e = _RCIF -> -> 0 `i `b ]
-"66
-[; ;newmain.c: 66:       tx_string(str,10);
+"68
+[; ;newmain.c: 68: void main(void) {
 [e ) _RCREG ]
 [e $UE 106  ]
-"67
-[; ;newmain.c: 67:     _delay((unsigned long)((3000)*(20000000/4000.0)));
+"69
+[; ;newmain.c: 69:   TRISC6=1;
 [e :UE 106 ]
 }
-"69
-[; ;newmain.c: 69: 
+"71
+[; ;newmain.c: 71:   TRISD=0;
+[v _UART_RX_Buffer `uc ~T0 @X0 1 e ]
+[i _UART_RX_Buffer
+-> -> 0 `i `uc
+]
+[v $root$_ISR `(v ~T0 @X0 0 e ]
+"72
+[; ;newmain.c: 72:   unsigned char get;
+[v _ISR `(v ~T1 @X0 1 ef ]
+{
+[e :U _ISR ]
+[f ]
+"73
+[; ;newmain.c: 73:   UART_Init();
+[e $ ! == -> . . _PIR1bits 0 5 `i -> 1 `i 111  ]
+{
+"74
+[; ;newmain.c: 74:   while(1)
+[e = _UART_RX_Buffer _RCREG ]
+"75
+[; ;newmain.c: 75:   {
+[e . . _PIR1bits 0 5 ]
+"76
+[; ;newmain.c: 76:       UART_Transmit_String(str,10);
+}
+[e :U 111 ]
+"77
+[; ;newmain.c: 77:     _delay((unsigned long)((3000)*(20000000/4000.0)));
+[e :UE 110 ]
+}
+"79
+[; ;newmain.c: 79: 
 [v _str `*uc ~T0 @X0 1 e ]
 [i _str
 :s 1C
 ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"71
+"81
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"72
+"82
 [e = _TRISC6 -> -> 1 `i `b ]
-"73
-[e = _TRISC7 -> -> 1 `i `b ]
-"74
-[e = _TRISD -> -> 0 `i `uc ]
-"75
-[v _get `uc ~T0 @X0 1 a ]
-"76
-[e ( _ser_int ..  ]
-"77
-[e :U 112 ]
-"78
-{
-"79
-[e ( _tx_string (2 , -> _str `*uc -> 10 `i ]
-"80
-[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"81
-}
-[e :U 111 ]
-[e $U 112  ]
-[e :U 113 ]
 "83
-[e :UE 110 ]
+[e = _TRISC7 -> -> 1 `i `b ]
+"84
+[e = _TRISD -> -> 0 `i `uc ]
+"85
+[v _get `uc ~T0 @X0 1 a ]
+"86
+[e ( _UART_Init ..  ]
+"87
+[e :U 114 ]
+"88
+{
+"89
+[e ( _UART_Transmit_String (2 , -> _str `*uc -> 10 `i ]
+"90
+[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"91
+}
+[e :U 113 ]
+[e $U 114  ]
+[e :U 115 ]
+"93
+[e :UE 112 ]
 }
 [a 1C 79 108 97 32 77 117 110 100 111 0 ]
