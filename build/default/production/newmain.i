@@ -1869,12 +1869,12 @@ extern __bank0 __bit __timeout;
 #pragma config CP = OFF
 
 
+uint8_t UART_RX_Buffer = 0x33;
+char str[18] = "BOTAO PRESSIONADO\n";
+uint8_t estado = 0;
+uint8_t estado_botao = 0;
 
-
-
-
-void UART_RX_Init()
-{
+void UART_RX_Init(){
   BRGH = 1;
   SPBRG = 25;
 
@@ -1891,8 +1891,7 @@ void UART_RX_Init()
   CREN = 1;
 }
 
-void UART_Init()
-{
+void UART_Init(){
 
     TXSTA = 0x20;
     RCSTA = 0b10010000;
@@ -1901,41 +1900,41 @@ void UART_Init()
     PIE1 = 0x20;
 }
 
-void UART_Transmit_Char(uint8_t a)
-{
+void UART_Transmit_Char(uint8_t a){
     TXREG=a;
     while(!TXIF);
     TXIF = 0;
 }
 
-void UART_Transmit_String(uint8_t *a,int size)
-{
+void UART_Transmit_String(uint8_t *a,int size){
     for(int i = 0; i < size; i++){
         UART_Transmit_Char(a[i]);
         _delay((unsigned long)((1)*(20000000/4000.0)));
     }
 }
 
-unsigned char UART_Receive()
-{
+unsigned char UART_Receive(){
     while(!RCIF);
     RCIF=0;
     return RCREG;
 }
 
-uint8_t UART_RX_Buffer = 0x33;
 void __attribute__((picinterrupt(("")))) ISR(){
     if(RCIF == 1){
         UART_RX_Buffer = UART_Receive();
-        if(UART_RX_Buffer == 'a' & PORTB == 0xFF)
-            PORTB=0x00;
-        if(UART_RX_Buffer == 'b' & PORTB == 0x00)
-            PORTB=0xff;
+        if(UART_RX_Buffer == 'f' & (PORTBbits.RB1 == 1))
+            PORTBbits.RB1 = 0;
+        if(UART_RX_Buffer == 'n' & (PORTBbits.RB1 == 0))
+            PORTBbits.RB1 = 1;
+        estado = 1;
         RCIF = 0;
     }
+    if (INTF == 1) {
+        _delay((unsigned long)((80)*(20000000/4000.0)));
+        estado_botao = 1;
+        INTF = 0;
+    }
 }
-
-char *str = "Hello World";
 
 void main(void) {
   TRISC6=1;
@@ -1943,10 +1942,16 @@ void main(void) {
   TRISB = 0X00;
   PORTB = 0x00;
   UART_Init();
+  INTE = 1;
   while(1)
   {
-    UART_Transmit_Char(UART_RX_Buffer);
-    _delay((unsigned long)((3000)*(20000000/4000.0)));
+    if(estado){
+        UART_Transmit_String("Mensagem recebida\n",18);
+        estado = 0;
+    }
+    if(estado_botao){
+        UART_Transmit_String((uint8_t*)str, 18);
+        estado_botao = 0;
+    }
   }
-
 }

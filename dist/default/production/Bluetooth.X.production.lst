@@ -1,789 +1,1107 @@
 
 
 Microchip MPLAB XC8 Assembler V2.41 build 20230208172133 
-                                                                                               Tue Jun 18 12:41:38 2024
+                                                                                               Wed Jun 19 10:08:46 2024
 
 Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1 
      1                           	processor	16F877A
      2                           	pagewidth 120
      3                           	opt	flic
      4                           	psect	idataCOMMON,global,class=CODE,delta=2,noexec
-     5                           	psect	strings,global,class=STRING,delta=2,noexec
-     6                           	psect	cinit,global,class=CODE,merge=1,delta=2
-     7                           	psect	dataCOMMON,global,class=COMMON,space=1,delta=1,noexec
-     8                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
-     9                           	psect	maintext,global,class=CODE,split=1,delta=2
-    10                           	psect	text1,local,class=CODE,merge=1,delta=2
-    11                           	psect	text2,local,class=CODE,merge=1,delta=2
-    12                           	psect	text3,local,class=CODE,merge=1,delta=2
-    13                           	psect	intentry,global,class=CODE,delta=2
-    14                           	psect	text4,local,class=CODE,merge=1,delta=2
-    15                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
-    16                           	dabs	1,0x7E,2
-    17     0000                     
-    18                           ; Generated 22/03/2023 GMT
-    19                           ; 
-    20                           ; Copyright © 2023, Microchip Technology Inc. and its subsidiaries ("Microchip")
-    21                           ; All rights reserved.
-    22                           ; 
-    23                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+     5                           	psect	idataBANK0,global,class=CODE,delta=2,noexec
+     6                           	psect	strings,global,class=STRING,delta=2,noexec
+     7                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     8                           	psect	dataCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     9                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1,noexec
+    10                           	psect	dataBANK0,global,class=BANK0,space=1,delta=1,noexec
+    11                           	psect	inittext,global,class=CODE,delta=2
+    12                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+    13                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1,noexec
+    14                           	psect	maintext,global,class=CODE,split=1,delta=2
+    15                           	psect	text1,local,class=CODE,merge=1,delta=2
+    16                           	psect	text2,local,class=CODE,merge=1,delta=2
+    17                           	psect	text3,local,class=CODE,merge=1,delta=2
+    18                           	psect	text4,local,class=CODE,merge=1,delta=2
+    19                           	psect	intentry,global,class=CODE,delta=2
+    20                           	psect	text5,local,class=CODE,merge=1,delta=2
+    21                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    22                           	dabs	1,0x7E,2
+    23     0000                     
+    24                           ; Generated 22/03/2023 GMT
+    25                           ; 
+    26                           ; Copyright © 2023, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    27                           ; All rights reserved.
+    28                           ; 
+    29                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
       +                          ip").
-    24                           ; 
-    25                           ; Redistribution and use in source and binary forms, with or without modification, are
-    26                           ; permitted provided that the following conditions are met:
-    27                           ; 
-    28                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
-      +                          t of
-    29                           ;        conditions and the following disclaimer.
     30                           ; 
-    31                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+    31                           ; Redistribution and use in source and binary forms, with or without modification, are
+    32                           ; permitted provided that the following conditions are met:
+    33                           ; 
+    34                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    35                           ;        conditions and the following disclaimer.
+    36                           ; 
+    37                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
       +                          list
-    32                           ;        of conditions and the following disclaimer in the documentation and/or other
-    33                           ;        materials provided with the distribution. Publication is not required when
-    34                           ;        this file is used in an embedded application.
-    35                           ; 
-    36                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+    38                           ;        of conditions and the following disclaimer in the documentation and/or other
+    39                           ;        materials provided with the distribution. Publication is not required when
+    40                           ;        this file is used in an embedded application.
+    41                           ; 
+    42                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
       +                          is
-    37                           ;        software without specific prior written permission.
-    38                           ; 
-    39                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-    40                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+    43                           ;        software without specific prior written permission.
+    44                           ; 
+    45                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    46                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
       +                          OR
-    41                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+    47                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
       +                          T,
-    42                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
-    43                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
-    44                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+    48                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    49                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    50                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
       +                          RICT
-    45                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+    51                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
       +                          SE OF
-    46                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-    47                           ; 
-    48                           ; 
-    49                           ; Code-generator required, PIC16F877A Definitions
-    50                           ; 
-    51                           ; SFR Addresses
-    52     0000                     	;# 
-    53     0001                     	;# 
-    54     0002                     	;# 
-    55     0003                     	;# 
-    56     0004                     	;# 
-    57     0005                     	;# 
-    58     0006                     	;# 
-    59     0007                     	;# 
-    60     0008                     	;# 
-    61     0009                     	;# 
-    62     000A                     	;# 
-    63     000B                     	;# 
-    64     000C                     	;# 
-    65     000D                     	;# 
-    66     000E                     	;# 
-    67     000E                     	;# 
-    68     000F                     	;# 
-    69     0010                     	;# 
-    70     0011                     	;# 
-    71     0012                     	;# 
-    72     0013                     	;# 
-    73     0014                     	;# 
-    74     0015                     	;# 
-    75     0015                     	;# 
-    76     0016                     	;# 
-    77     0017                     	;# 
-    78     0018                     	;# 
-    79     0019                     	;# 
-    80     001A                     	;# 
-    81     001B                     	;# 
-    82     001B                     	;# 
-    83     001C                     	;# 
-    84     001D                     	;# 
-    85     001E                     	;# 
-    86     001F                     	;# 
-    87     0081                     	;# 
-    88     0085                     	;# 
-    89     0086                     	;# 
-    90     0087                     	;# 
-    91     0088                     	;# 
-    92     0089                     	;# 
-    93     008C                     	;# 
-    94     008D                     	;# 
-    95     008E                     	;# 
-    96     0091                     	;# 
-    97     0092                     	;# 
-    98     0093                     	;# 
-    99     0094                     	;# 
-   100     0098                     	;# 
-   101     0099                     	;# 
-   102     009C                     	;# 
-   103     009D                     	;# 
-   104     009E                     	;# 
-   105     009F                     	;# 
-   106     010C                     	;# 
-   107     010D                     	;# 
-   108     010E                     	;# 
-   109     010F                     	;# 
-   110     018C                     	;# 
-   111     018D                     	;# 
-   112     0000                     	;# 
-   113     0001                     	;# 
-   114     0002                     	;# 
-   115     0003                     	;# 
-   116     0004                     	;# 
-   117     0005                     	;# 
-   118     0006                     	;# 
-   119     0007                     	;# 
-   120     0008                     	;# 
-   121     0009                     	;# 
-   122     000A                     	;# 
-   123     000B                     	;# 
-   124     000C                     	;# 
-   125     000D                     	;# 
-   126     000E                     	;# 
-   127     000E                     	;# 
-   128     000F                     	;# 
-   129     0010                     	;# 
-   130     0011                     	;# 
-   131     0012                     	;# 
-   132     0013                     	;# 
-   133     0014                     	;# 
-   134     0015                     	;# 
-   135     0015                     	;# 
-   136     0016                     	;# 
-   137     0017                     	;# 
-   138     0018                     	;# 
-   139     0019                     	;# 
-   140     001A                     	;# 
-   141     001B                     	;# 
-   142     001B                     	;# 
-   143     001C                     	;# 
-   144     001D                     	;# 
-   145     001E                     	;# 
-   146     001F                     	;# 
-   147     0081                     	;# 
-   148     0085                     	;# 
-   149     0086                     	;# 
-   150     0087                     	;# 
-   151     0088                     	;# 
-   152     0089                     	;# 
-   153     008C                     	;# 
-   154     008D                     	;# 
-   155     008E                     	;# 
-   156     0091                     	;# 
-   157     0092                     	;# 
-   158     0093                     	;# 
-   159     0094                     	;# 
-   160     0098                     	;# 
-   161     0099                     	;# 
-   162     009C                     	;# 
-   163     009D                     	;# 
-   164     009E                     	;# 
-   165     009F                     	;# 
-   166     010C                     	;# 
-   167     010D                     	;# 
-   168     010E                     	;# 
-   169     010F                     	;# 
-   170     018C                     	;# 
-   171     018D                     	;# 
-   172                           
-   173                           	psect	idataCOMMON
-   174     00BF                     __pidataCOMMON:
-   175                           
-   176                           ;initializer for _str
-   177     00BF  3401               	retlw	low ((STR_1-__stringbase)| (0+32768))
+    52                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    53                           ; 
+    54                           ; 
+    55                           ; Code-generator required, PIC16F877A Definitions
+    56                           ; 
+    57                           ; SFR Addresses
+    58     0000                     	;# 
+    59     0001                     	;# 
+    60     0002                     	;# 
+    61     0003                     	;# 
+    62     0004                     	;# 
+    63     0005                     	;# 
+    64     0006                     	;# 
+    65     0007                     	;# 
+    66     0008                     	;# 
+    67     0009                     	;# 
+    68     000A                     	;# 
+    69     000B                     	;# 
+    70     000C                     	;# 
+    71     000D                     	;# 
+    72     000E                     	;# 
+    73     000E                     	;# 
+    74     000F                     	;# 
+    75     0010                     	;# 
+    76     0011                     	;# 
+    77     0012                     	;# 
+    78     0013                     	;# 
+    79     0014                     	;# 
+    80     0015                     	;# 
+    81     0015                     	;# 
+    82     0016                     	;# 
+    83     0017                     	;# 
+    84     0018                     	;# 
+    85     0019                     	;# 
+    86     001A                     	;# 
+    87     001B                     	;# 
+    88     001B                     	;# 
+    89     001C                     	;# 
+    90     001D                     	;# 
+    91     001E                     	;# 
+    92     001F                     	;# 
+    93     0081                     	;# 
+    94     0085                     	;# 
+    95     0086                     	;# 
+    96     0087                     	;# 
+    97     0088                     	;# 
+    98     0089                     	;# 
+    99     008C                     	;# 
+   100     008D                     	;# 
+   101     008E                     	;# 
+   102     0091                     	;# 
+   103     0092                     	;# 
+   104     0093                     	;# 
+   105     0094                     	;# 
+   106     0098                     	;# 
+   107     0099                     	;# 
+   108     009C                     	;# 
+   109     009D                     	;# 
+   110     009E                     	;# 
+   111     009F                     	;# 
+   112     010C                     	;# 
+   113     010D                     	;# 
+   114     010E                     	;# 
+   115     010F                     	;# 
+   116     018C                     	;# 
+   117     018D                     	;# 
+   118     0000                     	;# 
+   119     0001                     	;# 
+   120     0002                     	;# 
+   121     0003                     	;# 
+   122     0004                     	;# 
+   123     0005                     	;# 
+   124     0006                     	;# 
+   125     0007                     	;# 
+   126     0008                     	;# 
+   127     0009                     	;# 
+   128     000A                     	;# 
+   129     000B                     	;# 
+   130     000C                     	;# 
+   131     000D                     	;# 
+   132     000E                     	;# 
+   133     000E                     	;# 
+   134     000F                     	;# 
+   135     0010                     	;# 
+   136     0011                     	;# 
+   137     0012                     	;# 
+   138     0013                     	;# 
+   139     0014                     	;# 
+   140     0015                     	;# 
+   141     0015                     	;# 
+   142     0016                     	;# 
+   143     0017                     	;# 
+   144     0018                     	;# 
+   145     0019                     	;# 
+   146     001A                     	;# 
+   147     001B                     	;# 
+   148     001B                     	;# 
+   149     001C                     	;# 
+   150     001D                     	;# 
+   151     001E                     	;# 
+   152     001F                     	;# 
+   153     0081                     	;# 
+   154     0085                     	;# 
+   155     0086                     	;# 
+   156     0087                     	;# 
+   157     0088                     	;# 
+   158     0089                     	;# 
+   159     008C                     	;# 
+   160     008D                     	;# 
+   161     008E                     	;# 
+   162     0091                     	;# 
+   163     0092                     	;# 
+   164     0093                     	;# 
+   165     0094                     	;# 
+   166     0098                     	;# 
+   167     0099                     	;# 
+   168     009C                     	;# 
+   169     009D                     	;# 
+   170     009E                     	;# 
+   171     009F                     	;# 
+   172     010C                     	;# 
+   173     010D                     	;# 
+   174     010E                     	;# 
+   175     010F                     	;# 
+   176     018C                     	;# 
+   177     018D                     	;# 
    178                           
-   179                           ;initializer for _UART_RX_Buffer
-   180     00C0  3433               	retlw	51
-   181     0006                     _PORTB	set	6
-   182     001A                     _RCREG	set	26
-   183     0019                     _TXREG	set	25
-   184     000B                     _INTCON	set	11
-   185     0018                     _RCSTA	set	24
-   186     0065                     _RCIF	set	101
-   187     0064                     _TXIF	set	100
-   188     00C4                     _CREN	set	196
-   189     005F                     _GIE	set	95
-   190     005E                     _PEIE	set	94
-   191     00C7                     _SPEN	set	199
-   192     0086                     _TRISB	set	134
-   193     008C                     _PIE1	set	140
-   194     0098                     _TXSTA	set	152
-   195     0099                     _SPBRG	set	153
-   196     0465                     _RCIE	set	1125
-   197     043F                     _TRISC7	set	1087
-   198     043E                     _TRISC6	set	1086
-   199     04C4                     _SYNC	set	1220
-   200     04C2                     _BRGH	set	1218
-   201                           
-   202                           	psect	strings
-   203     0088                     __pstrings:
-   204     0088                     stringtab:
-   205     0088                     __stringtab:
-   206     0088                     stringcode:	
-   207                           ;	String table - string pointers are 1 byte each
-   208                           
-   209     0088                     stringdir:
-   210     0088  3000               	movlw	high stringdir
-   211     0089  008A               	movwf	10
-   212     008A  0804               	movf	4,w
-   213     008B  0A84               	incf	4,f
-   214     008C  0782               	addwf	2,f
-   215     008D                     __stringbase:
-   216     008D  3400               	retlw	0
-   217     008E                     __end_of__stringtab:
-   218     008E                     STR_1:
-   219     008E  3448               	retlw	72	;'H'
-   220     008F  3465               	retlw	101	;'e'
-   221     0090  346C               	retlw	108	;'l'
-   222     0091  346C               	retlw	108	;'l'
-   223     0092  346F               	retlw	111	;'o'
-   224     0093  3420               	retlw	32	;' '
-   225     0094  3457               	retlw	87	;'W'
-   226     0095  346F               	retlw	111	;'o'
-   227     0096  3472               	retlw	114	;'r'
-   228     0097  346C               	retlw	108	;'l'
-   229     0098  3464               	retlw	100	;'d'
-   230     0099  3400               	retlw	0
-   231                           
-   232                           	psect	cinit
-   233     000F                     start_initialization:	
-   234                           ; #config settings
+   179                           	psect	idataCOMMON
+   180     0170                     __pidataCOMMON:
+   181                           
+   182                           ;initializer for _UART_RX_Buffer
+   183     0170  3433               	retlw	51
+   184                           
+   185                           	psect	idataBANK0
+   186     0139                     __pidataBANK0:
+   187                           
+   188                           ;initializer for _str
+   189     0139  3442               	retlw	66
+   190     013A  344F               	retlw	79
+   191     013B  3454               	retlw	84
+   192     013C  3441               	retlw	65
+   193     013D  344F               	retlw	79
+   194     013E  3420               	retlw	32
+   195     013F  3450               	retlw	80
+   196     0140  3452               	retlw	82
+   197     0141  3445               	retlw	69
+   198     0142  3453               	retlw	83
+   199     0143  3453               	retlw	83
+   200     0144  3449               	retlw	73
+   201     0145  344F               	retlw	79
+   202     0146  344E               	retlw	78
+   203     0147  3441               	retlw	65
+   204     0148  3444               	retlw	68
+   205     0149  344F               	retlw	79
+   206     014A  340A               	retlw	10
+   207     0006                     _PORTB	set	6
+   208     0006                     _PORTBbits	set	6
+   209     001A                     _RCREG	set	26
+   210     0019                     _TXREG	set	25
+   211     000B                     _INTCON	set	11
+   212     0018                     _RCSTA	set	24
+   213     005C                     _INTE	set	92
+   214     0059                     _INTF	set	89
+   215     0065                     _RCIF	set	101
+   216     0064                     _TXIF	set	100
+   217     00C4                     _CREN	set	196
+   218     005F                     _GIE	set	95
+   219     005E                     _PEIE	set	94
+   220     00C7                     _SPEN	set	199
+   221     0086                     _TRISB	set	134
+   222     008C                     _PIE1	set	140
+   223     0098                     _TXSTA	set	152
+   224     0099                     _SPBRG	set	153
+   225     0465                     _RCIE	set	1125
+   226     043F                     _TRISC7	set	1087
+   227     043E                     _TRISC6	set	1086
+   228     04C4                     _SYNC	set	1220
+   229     04C2                     _BRGH	set	1218
+   230                           
+   231                           	psect	strings
+   232     0103                     __pstrings:
+   233     0103                     stringtab:
+   234     0103                     __stringtab:
    235                           
-   236     000F                     __initialization:
-   237                           
-   238                           ; Initialize objects allocated to COMMON
-   239     000F  120A  118A  20BF  120A  118A  	fcall	__pidataCOMMON	;fetch initializer
-   240     0014  00F7               	movwf	__pdataCOMMON& (0+127)
-   241     0015  120A  118A  20C0  120A  118A  	fcall	__pidataCOMMON+1	;fetch initializer
-   242     001A  00F8               	movwf	(__pdataCOMMON+1)& (0+127)
-   243     001B                     end_of_initialization:	
-   244                           ;End of C runtime variable initialization code
-   245                           
-   246     001B                     __end_of__initialization:
-   247     001B  0183               	clrf	3
-   248     001C  120A  118A  2864   	ljmp	_main	;jump to C main() function
-   249                           
-   250                           	psect	dataCOMMON
-   251     0077                     __pdataCOMMON:
-   252     0077                     _str:
-   253     0077                     	ds	1
-   254     0078                     _UART_RX_Buffer:
-   255     0078                     	ds	1
-   256                           
-   257                           	psect	cstackCOMMON
-   258     0070                     __pcstackCOMMON:
-   259     0070                     ?_UART_Init:
-   260     0070                     ?_UART_Transmit_Char:	
-   261                           ; 1 bytes @ 0x0
-   262                           
-   263     0070                     ?_UART_Receive:	
-   264                           ; 1 bytes @ 0x0
-   265                           
-   266     0070                     ??_UART_Receive:	
-   267                           ; 1 bytes @ 0x0
-   268                           
-   269     0070                     ?_ISR:	
-   270                           ; 1 bytes @ 0x0
-   271                           
-   272     0070                     ??_ISR:	
-   273                           ; 1 bytes @ 0x0
-   274                           
-   275     0070                     ?_main:	
-   276                           ; 1 bytes @ 0x0
+   236                           ;	String table - string pointers are 1 byte each
+   237     0103  1BFF               	btfsc	btemp+1,7
+   238     0104  290D               	ljmp	stringcode
+   239     0105  1383               	bcf	3,7
+   240     0106  187F               	btfsc	btemp+1,0
+   241     0107  1783               	bsf	3,7
+   242     0108  0800               	movf	0,w
+   243     0109  0A84               	incf	4,f
+   244     010A  1903               	skipnz
+   245     010B  0AFF               	incf	btemp+1,f
+   246     010C  0008               	return
+   247     010D                     stringcode:
+   248     010D                     stringdir:
+   249     010D  3001               	movlw	high stringdir
+   250     010E  008A               	movwf	10
+   251     010F  0804               	movf	4,w
+   252     0110  0A84               	incf	4,f
+   253     0111  0782               	addwf	2,f
+   254     0112                     __stringbase:
+   255     0112  3400               	retlw	0
+   256     0113                     __end_of__stringtab:
+   257     0113                     STR_1:
+   258     0113  344D               	retlw	77	;'M'
+   259     0114  3465               	retlw	101	;'e'
+   260     0115  346E               	retlw	110	;'n'
+   261     0116  3473               	retlw	115	;'s'
+   262     0117  3461               	retlw	97	;'a'
+   263     0118  3467               	retlw	103	;'g'
+   264     0119  3465               	retlw	101	;'e'
+   265     011A  346D               	retlw	109	;'m'
+   266     011B  3420               	retlw	32	;' '
+   267     011C  3472               	retlw	114	;'r'
+   268     011D  3465               	retlw	101	;'e'
+   269     011E  3463               	retlw	99	;'c'
+   270     011F  3465               	retlw	101	;'e'
+   271     0120  3462               	retlw	98	;'b'
+   272     0121  3469               	retlw	105	;'i'
+   273     0122  3464               	retlw	100	;'d'
+   274     0123  3461               	retlw	97	;'a'
+   275     0124  340A               	retlw	10
+   276     0125  3400               	retlw	0
    277                           
-   278                           
-   279                           ; 1 bytes @ 0x0
-   280     0070                     	ds	3
-   281     0073                     ??_UART_Init:
-   282     0073                     ??_UART_Transmit_Char:	
-   283                           ; 1 bytes @ 0x3
-   284                           
-   285     0073                     UART_Transmit_Char@a:	
-   286                           ; 1 bytes @ 0x3
-   287                           
-   288                           
-   289                           ; 1 bytes @ 0x3
-   290     0073                     	ds	1
-   291     0074                     ??_main:
-   292                           
-   293                           ; 1 bytes @ 0x4
-   294     0074                     	ds	3
+   278                           	psect	cinit
+   279     000F                     start_initialization:	
+   280                           ; #config settings
+   281                           
+   282     000F                     __initialization:
+   283                           
+   284                           ; Initialize objects allocated to BANK0
+   285     000F  1383               	bcf	3,7	;select IRP bank0
+   286     0010  3032               	movlw	low (__pdataBANK0+18)
+   287     0011  00FD               	movwf	btemp+-1
+   288     0012  3001               	movlw	high __pidataBANK0
+   289     0013  00FE               	movwf	btemp
+   290     0014  3039               	movlw	low __pidataBANK0
+   291     0015  00FF               	movwf	btemp+1
+   292     0016  3020               	movlw	low __pdataBANK0
+   293     0017  0084               	movwf	4
+   294     0018  120A  118A  212A  120A  118A  	fcall	init_ram0
    295                           
-   296                           	psect	maintext
-   297     0064                     __pmaintext:	
-   298 ;;
-   299 ;;Main: autosize = 0, tempsize = 3, incstack = 0, save=0
-   300 ;;
-   301 ;; *************** function _main *****************
-   302 ;; Defined at:
-   303 ;;		line 82 in file "newmain.c"
-   304 ;; Parameters:    Size  Location     Type
-   305 ;;		None
-   306 ;; Auto vars:     Size  Location     Type
-   307 ;;		None
-   308 ;; Return value:  Size  Location     Type
-   309 ;;                  1    wreg      void 
-   310 ;; Registers used:
-   311 ;;		wreg, status,2, status,0, pclath, cstack
-   312 ;; Tracked objects:
-   313 ;;		On entry : B00/0
-   314 ;;		On exit  : 0/0
-   315 ;;		Unchanged: 0/0
-   316 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   317 ;;      Params:         0       0       0       0       0
-   318 ;;      Locals:         0       0       0       0       0
-   319 ;;      Temps:          3       0       0       0       0
-   320 ;;      Totals:         3       0       0       0       0
-   321 ;;Total ram usage:        3 bytes
-   322 ;; Hardware stack levels required when called: 3
-   323 ;; This function calls:
-   324 ;;		_UART_Init
-   325 ;;		_UART_Transmit_Char
-   326 ;; This function is called by:
-   327 ;;		Startup code after reset
-   328 ;; This function uses a non-reentrant model
-   329 ;;
+   296                           ; Initialize objects allocated to COMMON
+   297     001D  120A  118A  2170  120A  118A  	fcall	__pidataCOMMON	;fetch initializer
+   298     0022  00F8               	movwf	__pdataCOMMON& (0+127)
+   299                           
+   300                           ; Clear objects allocated to BANK0
+   301     0023  01B9               	clrf	__pbssBANK0& (0+127)
+   302     0024  01BA               	clrf	(__pbssBANK0+1)& (0+127)
+   303     0025                     end_of_initialization:	
+   304                           ;End of C runtime variable initialization code
+   305                           
+   306     0025                     __end_of__initialization:
+   307     0025  0183               	clrf	3
+   308     0026  120A  118A  28C5   	ljmp	_main	;jump to C main() function
+   309                           
+   310                           	psect	dataCOMMON
+   311     0078                     __pdataCOMMON:
+   312     0078                     _UART_RX_Buffer:
+   313     0078                     	ds	1
+   314                           
+   315                           	psect	bssBANK0
+   316     0039                     __pbssBANK0:
+   317     0039                     _estado_botao:
+   318     0039                     	ds	1
+   319     003A                     _estado:
+   320     003A                     	ds	1
+   321                           
+   322                           	psect	dataBANK0
+   323     0020                     __pdataBANK0:
+   324     0020                     _str:
+   325     0020                     	ds	18
+   326                           
+   327                           	psect	inittext
+   328     0126                     init_fetch0:	
+   329                           ;	Called with low address in FSR and high address in W
    330                           
-   331     0064                     _main:	
-   332                           ;psect for function _main
-   333                           
-   334     0064                     l732:	
-   335                           ;incstack = 0
-   336                           ; Regs used in _main: [wreg+status,2+status,0+pclath+cstack]
-   337                           
-   338     0064  1683               	bsf	3,5	;RP0=1, select bank1
-   339     0065  1303               	bcf	3,6	;RP1=0, select bank1
-   340     0066  1707               	bsf	7,6	;volatile
-   341     0067  1787               	bsf	7,7	;volatile
-   342     0068                     l734:
-   343     0068  0186               	clrf	6	;volatile
-   344     0069  1283               	bcf	3,5	;RP0=0, select bank0
-   345     006A  1303               	bcf	3,6	;RP1=0, select bank0
-   346     006B  0186               	clrf	6	;volatile
-   347     006C                     l736:
-   348     006C  120A  118A  209A  120A  118A  	fcall	_UART_Init
-   349     0071                     l738:
-   350     0071  0878               	movf	_UART_RX_Buffer,w
-   351     0072  120A  118A  20AB  120A  118A  	fcall	_UART_Transmit_Char
-   352     0077                     l740:
-   353     0077  304D               	movlw	77
-   354     0078  00F6               	movwf	??_main+2
-   355     0079  3019               	movlw	25
-   356     007A  00F5               	movwf	??_main+1
-   357     007B  304F               	movlw	79
-   358     007C  00F4               	movwf	??_main
-   359     007D                     u117:
-   360     007D  0BF4               	decfsz	??_main,f
-   361     007E  287D               	goto	u117
-   362     007F  0BF5               	decfsz	??_main+1,f
-   363     0080  287D               	goto	u117
-   364     0081  0BF6               	decfsz	??_main+2,f
-   365     0082  287D               	goto	u117
-   366     0083  2884               	nop2
-   367     0084  2871               	goto	l738
-   368     0085  120A  118A  280C   	ljmp	start
-   369     0088                     __end_of_main:
-   370                           
-   371                           	psect	text1
-   372     00AB                     __ptext1:	
-   373 ;; *************** function _UART_Transmit_Char *****************
-   374 ;; Defined at:
-   375 ;;		line 46 in file "newmain.c"
-   376 ;; Parameters:    Size  Location     Type
-   377 ;;  a               1    wreg     unsigned char 
-   378 ;; Auto vars:     Size  Location     Type
-   379 ;;  a               1    3[COMMON] unsigned char 
-   380 ;; Return value:  Size  Location     Type
-   381 ;;                  1    wreg      void 
-   382 ;; Registers used:
-   383 ;;		wreg
-   384 ;; Tracked objects:
-   385 ;;		On entry : 0/0
-   386 ;;		On exit  : 0/0
-   387 ;;		Unchanged: 0/0
-   388 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   389 ;;      Params:         0       0       0       0       0
-   390 ;;      Locals:         1       0       0       0       0
-   391 ;;      Temps:          0       0       0       0       0
-   392 ;;      Totals:         1       0       0       0       0
-   393 ;;Total ram usage:        1 bytes
-   394 ;; Hardware stack levels used: 1
-   395 ;; Hardware stack levels required when called: 2
-   396 ;; This function calls:
-   397 ;;		Nothing
-   398 ;; This function is called by:
-   399 ;;		_main
-   400 ;;		_UART_Transmit_String
-   401 ;; This function uses a non-reentrant model
-   402 ;;
-   403                           
-   404     00AB                     _UART_Transmit_Char:	
-   405                           ;psect for function _UART_Transmit_Char
+   331     0126  087E               	movf	btemp,w
+   332     0127  008A               	movwf	10
+   333     0128  087F               	movf	btemp+1,w
+   334     0129  0082               	movwf	2
+   335     012A                     init_ram0:	
+   336                           ;Called with:
+   337                           ;	high address of idata address in btemp 
+   338                           ;	low address of idata address in btemp+1 
+   339                           ;	low address of data in FSR
+   340                           ;	high address + 1 of data in btemp-1
+   341                           
+   342     012A  120A  118A  2126  120A  118A  	fcall	init_fetch0
+   343     012F  0080               	movwf	0
+   344     0130  0A84               	incf	4,f
+   345     0131  0804               	movf	4,w
+   346     0132  067D               	xorwf	btemp+-1,w
+   347     0133  1903               	btfsc	3,2
+   348     0134  3400               	retlw	0
+   349     0135  0AFF               	incf	btemp+1,f
+   350     0136  1903               	btfsc	3,2
+   351     0137  0AFE               	incf	btemp,f
+   352     0138  292A               	goto	init_ram0
+   353                           
+   354                           	psect	cstackCOMMON
+   355     0070                     __pcstackCOMMON:
+   356     0070                     ?_UART_Init:
+   357     0070                     ?_UART_Transmit_Char:	
+   358                           ; 1 bytes @ 0x0
+   359                           
+   360     0070                     ?_UART_Receive:	
+   361                           ; 1 bytes @ 0x0
+   362                           
+   363     0070                     ??_UART_Receive:	
+   364                           ; 1 bytes @ 0x0
+   365                           
+   366     0070                     ?_ISR:	
+   367                           ; 1 bytes @ 0x0
+   368                           
+   369     0070                     ??_ISR:	
+   370                           ; 1 bytes @ 0x0
+   371                           
+   372     0070                     ?_main:	
+   373                           ; 1 bytes @ 0x0
+   374                           
+   375                           
+   376                           ; 1 bytes @ 0x0
+   377     0070                     	ds	5
+   378     0075                     ??_UART_Init:
+   379     0075                     ??_UART_Transmit_Char:	
+   380                           ; 1 bytes @ 0x5
+   381                           
+   382     0075                     UART_Transmit_Char@a:	
+   383                           ; 1 bytes @ 0x5
+   384                           
+   385                           
+   386                           ; 1 bytes @ 0x5
+   387     0075                     	ds	1
+   388     0076                     UART_Transmit_String@i:
+   389                           
+   390                           ; 2 bytes @ 0x6
+   391     0076                     	ds	2
+   392     0078                     ??_main:
+   393                           
+   394                           	psect	cstackBANK0
+   395     0032                     __pcstackBANK0:	
+   396                           ; 1 bytes @ 0x8
+   397                           
+   398     0032                     ?_UART_Transmit_String:
+   399     0032                     UART_Transmit_String@a:	
+   400                           ; 1 bytes @ 0x0
+   401                           
+   402                           
+   403                           ; 2 bytes @ 0x0
+   404     0032                     	ds	2
+   405     0034                     UART_Transmit_String@size:
    406                           
-   407                           
-   408                           ;incstack = 0
-   409                           ; Regs used in _UART_Transmit_Char: [wreg]
-   410                           ;UART_Transmit_Char@a stored from wreg
-   411     00AB  00F3               	movwf	UART_Transmit_Char@a
-   412     00AC                     l680:
+   407                           ; 2 bytes @ 0x2
+   408     0034                     	ds	2
+   409     0036                     ??_UART_Transmit_String:
+   410                           
+   411                           ; 1 bytes @ 0x4
+   412     0036                     	ds	3
    413                           
-   414                           ;newmain.c: 46: };newmain.c: 47: ;newmain.c: 48: unsigned char UART_Receive()
-   415     00AC  0873               	movf	UART_Transmit_Char@a,w
-   416     00AD  1283               	bcf	3,5	;RP0=0, select bank0
-   417     00AE  1303               	bcf	3,6	;RP1=0, select bank0
-   418     00AF  0099               	movwf	25	;volatile
-   419     00B0                     l51:	
-   420                           ;newmain.c: 49: {
-   421                           
-   422     00B0  1E0C               	btfss	12,4	;volatile
-   423     00B1  28B3               	goto	u11
-   424     00B2  28B4               	goto	u10
-   425     00B3                     u11:
-   426     00B3  28B0               	goto	l51
-   427     00B4                     u10:
-   428     00B4                     l53:
-   429                           
-   430                           ;newmain.c: 50:     while(!RCIF);
-   431     00B4  120C               	bcf	12,4	;volatile
-   432     00B5                     l54:
-   433     00B5  0008               	return
-   434     00B6                     __end_of_UART_Transmit_Char:
-   435                           
-   436                           	psect	text2
-   437     009A                     __ptext2:	
-   438 ;; *************** function _UART_Init *****************
-   439 ;; Defined at:
-   440 ;;		line 36 in file "newmain.c"
-   441 ;; Parameters:    Size  Location     Type
-   442 ;;		None
-   443 ;; Auto vars:     Size  Location     Type
-   444 ;;		None
-   445 ;; Return value:  Size  Location     Type
-   446 ;;                  1    wreg      void 
-   447 ;; Registers used:
-   448 ;;		wreg
-   449 ;; Tracked objects:
-   450 ;;		On entry : 0/0
-   451 ;;		On exit  : 0/0
-   452 ;;		Unchanged: 0/0
-   453 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   454 ;;      Params:         0       0       0       0       0
-   455 ;;      Locals:         0       0       0       0       0
-   456 ;;      Temps:          0       0       0       0       0
-   457 ;;      Totals:         0       0       0       0       0
-   458 ;;Total ram usage:        0 bytes
-   459 ;; Hardware stack levels used: 1
-   460 ;; Hardware stack levels required when called: 2
-   461 ;; This function calls:
-   462 ;;		Nothing
-   463 ;; This function is called by:
-   464 ;;		_main
-   465 ;; This function uses a non-reentrant model
-   466 ;;
-   467                           
-   468     009A                     _UART_Init:	
-   469                           ;psect for function _UART_Init
-   470                           
-   471     009A                     l678:	
-   472                           ;incstack = 0
-   473                           ; Regs used in _UART_Init: [wreg]
+   414                           	psect	maintext
+   415     00C5                     __pmaintext:	
+   416 ;;
+   417 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   418 ;;
+   419 ;; *************** function _main *****************
+   420 ;; Defined at:
+   421 ;;		line 81 in file "newmain.c"
+   422 ;; Parameters:    Size  Location     Type
+   423 ;;		None
+   424 ;; Auto vars:     Size  Location     Type
+   425 ;;		None
+   426 ;; Return value:  Size  Location     Type
+   427 ;;                  1    wreg      void 
+   428 ;; Registers used:
+   429 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+   430 ;; Tracked objects:
+   431 ;;		On entry : B00/0
+   432 ;;		On exit  : 0/0
+   433 ;;		Unchanged: 0/0
+   434 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   435 ;;      Params:         0       0       0       0       0
+   436 ;;      Locals:         0       0       0       0       0
+   437 ;;      Temps:          0       0       0       0       0
+   438 ;;      Totals:         0       0       0       0       0
+   439 ;;Total ram usage:        0 bytes
+   440 ;; Hardware stack levels required when called: 4
+   441 ;; This function calls:
+   442 ;;		_UART_Init
+   443 ;;		_UART_Transmit_String
+   444 ;; This function is called by:
+   445 ;;		Startup code after reset
+   446 ;; This function uses a non-reentrant model
+   447 ;;
+   448                           
+   449     00C5                     _main:	
+   450                           ;psect for function _main
+   451                           
+   452     00C5                     l839:	
+   453                           ;incstack = 0
+   454                           ; Regs used in _main: [wreg-fsr0h+status,2+status,0+btemp+1+pclath+cstack]
+   455                           
+   456                           
+   457                           ;newmain.c: 82:         UART_Transmit_String((uint8_t*)str, 18);
+   458     00C5  1683               	bsf	3,5	;RP0=1, select bank1
+   459     00C6  1303               	bcf	3,6	;RP1=0, select bank1
+   460     00C7  1707               	bsf	7,6	;volatile
+   461                           
+   462                           ;newmain.c: 83:         estado_botao = 0;
+   463     00C8  1787               	bsf	7,7	;volatile
+   464     00C9                     l841:
+   465                           
+   466                           ;newmain.c: 84:     }
+   467     00C9  0186               	clrf	6	;volatile
+   468                           
+   469                           ;newmain.c: 85:   }
+   470     00CA  1283               	bcf	3,5	;RP0=0, select bank0
+   471     00CB  1303               	bcf	3,6	;RP1=0, select bank0
+   472     00CC  0186               	clrf	6	;volatile
+   473     00CD                     l843:
    474                           
-   475                           
-   476                           ;newmain.c: 39: 
-   477     009A  3020               	movlw	32
-   478     009B  1683               	bsf	3,5	;RP0=1, select bank1
-   479     009C  1303               	bcf	3,6	;RP1=0, select bank1
-   480     009D  0098               	movwf	24	;volatile
-   481                           
-   482                           ;newmain.c: 40: void UART_Transmit_String(uint8_t *a,int size)
-   483     009E  3090               	movlw	144
-   484     009F  1283               	bcf	3,5	;RP0=0, select bank0
-   485     00A0  1303               	bcf	3,6	;RP1=0, select bank0
-   486     00A1  0098               	movwf	24	;volatile
-   487                           
-   488                           ;newmain.c: 41: {
-   489     00A2  3020               	movlw	32
-   490     00A3  1683               	bsf	3,5	;RP0=1, select bank1
-   491     00A4  1303               	bcf	3,6	;RP1=0, select bank1
-   492     00A5  0099               	movwf	25	;volatile
-   493                           
-   494                           ;newmain.c: 42:     for(int i = 0; i < size; i++){
-   495     00A6  30C0               	movlw	192
-   496     00A7  008B               	movwf	11	;volatile
-   497                           
-   498                           ;newmain.c: 43:         UART_Transmit_Char(a[i]);
-   499     00A8  3020               	movlw	32
-   500     00A9  008C               	movwf	12	;volatile
-   501     00AA                     l48:
-   502     00AA  0008               	return
-   503     00AB                     __end_of_UART_Init:
-   504                           
-   505                           	psect	text3
-   506     001F                     __ptext3:	
-   507 ;; *************** function _ISR *****************
-   508 ;; Defined at:
-   509 ;;		line 69 in file "newmain.c"
-   510 ;; Parameters:    Size  Location     Type
-   511 ;;		None
-   512 ;; Auto vars:     Size  Location     Type
-   513 ;;		None
-   514 ;; Return value:  Size  Location     Type
-   515 ;;                  1    wreg      void 
-   516 ;; Registers used:
-   517 ;;		wreg, status,2, status,0, pclath, cstack
-   518 ;; Tracked objects:
-   519 ;;		On entry : 0/0
-   520 ;;		On exit  : 0/0
-   521 ;;		Unchanged: 0/0
-   522 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   523 ;;      Params:         0       0       0       0       0
-   524 ;;      Locals:         0       0       0       0       0
-   525 ;;      Temps:          3       0       0       0       0
-   526 ;;      Totals:         3       0       0       0       0
-   527 ;;Total ram usage:        3 bytes
-   528 ;; Hardware stack levels used: 1
-   529 ;; Hardware stack levels required when called: 1
-   530 ;; This function calls:
-   531 ;;		_UART_Receive
-   532 ;; This function is called by:
-   533 ;;		Interrupt level 1
-   534 ;; This function uses a non-reentrant model
-   535 ;;
-   536                           
-   537     001F                     _ISR:	
-   538                           ;psect for function _ISR
-   539                           
-   540     001F                     i1l718:
-   541                           
-   542                           ;newmain.c: 70:   TRISC6=1;
-   543     001F  1283               	bcf	3,5	;RP0=0, select bank0
-   544     0020  1303               	bcf	3,6	;RP1=0, select bank0
-   545     0021  1E8C               	btfss	12,5	;volatile
-   546     0022  2824               	goto	u4_21
-   547     0023  2825               	goto	u4_20
-   548     0024                     u4_21:
-   549     0024  285D               	goto	i1l76
-   550     0025                     u4_20:
-   551     0025                     i1l720:
-   552                           
-   553                           ;newmain.c: 71:   TRISC7=1;
-   554     0025  120A  118A  20B6  120A  118A  	fcall	_UART_Receive
-   555     002A  00F8               	movwf	_UART_RX_Buffer
-   556     002B                     i1l722:
-   557                           
-   558                           ;newmain.c: 72:   TRISB = 0X00;
-   559     002B  1283               	bcf	3,5	;RP0=0, select bank0
-   560     002C  1303               	bcf	3,6	;RP1=0, select bank0
-   561     002D  0A06               	incf	6,w	;volatile
-   562     002E  1903               	btfsc	3,2
-   563     002F  2831               	goto	u5_21
-   564     0030  2833               	goto	u5_20
-   565     0031                     u5_21:
-   566     0031  3001               	movlw	1
-   567     0032  2834               	goto	u5_22
-   568     0033                     u5_20:
-   569     0033  3000               	movlw	0
-   570     0034                     u5_22:
-   571     0034  00F0               	movwf	??_ISR
-   572     0035  3061               	movlw	97
-   573     0036  0678               	xorwf	_UART_RX_Buffer,w
-   574     0037  1903               	btfsc	3,2
-   575     0038  283A               	goto	u6_21
-   576     0039  283C               	goto	u6_20
-   577     003A                     u6_21:
-   578     003A  3001               	movlw	1
-   579     003B  283D               	goto	u6_22
-   580     003C                     u6_20:
-   581     003C  3000               	movlw	0
-   582     003D                     u6_22:
-   583     003D  0570               	andwf	??_ISR,w
-   584     003E  3800               	iorlw	0
-   585     003F  1903               	skipnz
-   586     0040  2842               	goto	u7_21
-   587     0041  2843               	goto	u7_20
-   588     0042                     u7_21:
-   589     0042  2844               	goto	i1l726
-   590     0043                     u7_20:
-   591     0043                     i1l724:
-   592                           
-   593                           ;newmain.c: 73:   PORTB = 0x00;
-   594     0043  0186               	clrf	6	;volatile
-   595     0044                     i1l726:
-   596                           
-   597                           ;newmain.c: 74:   UART_Init();
-   598     0044  0806               	movf	6,w	;volatile
-   599     0045  1903               	btfsc	3,2
-   600     0046  2848               	goto	u8_21
-   601     0047  284A               	goto	u8_20
-   602     0048                     u8_21:
-   603     0048  3001               	movlw	1
-   604     0049  284B               	goto	u8_22
-   605     004A                     u8_20:
-   606     004A  3000               	movlw	0
-   607     004B                     u8_22:
-   608     004B  00F0               	movwf	??_ISR
-   609     004C  3062               	movlw	98
-   610     004D  0678               	xorwf	_UART_RX_Buffer,w
-   611     004E  1903               	btfsc	3,2
-   612     004F  2851               	goto	u9_21
-   613     0050  2853               	goto	u9_20
-   614     0051                     u9_21:
-   615     0051  3001               	movlw	1
-   616     0052  2854               	goto	u9_22
-   617     0053                     u9_20:
-   618     0053  3000               	movlw	0
-   619     0054                     u9_22:
-   620     0054  0570               	andwf	??_ISR,w
-   621     0055  3800               	iorlw	0
-   622     0056  1903               	skipnz
-   623     0057  2859               	goto	u10_21
-   624     0058  285A               	goto	u10_20
-   625     0059                     u10_21:
-   626     0059  285C               	goto	i1l730
-   627     005A                     u10_20:
-   628     005A                     i1l728:
-   629                           
-   630                           ;newmain.c: 75:   while(1)
-   631     005A  30FF               	movlw	255
-   632     005B  0086               	movwf	6	;volatile
-   633     005C                     i1l730:
-   634                           
-   635                           ;newmain.c: 76:   {
-   636     005C  128C               	bcf	12,5	;volatile
-   637     005D                     i1l76:
-   638     005D  0872               	movf	??_ISR+2,w
-   639     005E  008A               	movwf	10
-   640     005F  0E71               	swapf	??_ISR+1,w
-   641     0060  0083               	movwf	3
-   642     0061  0EFE               	swapf	btemp,f
-   643     0062  0E7E               	swapf	btemp,w
-   644     0063  0009               	retfie
-   645     0064                     __end_of_ISR:
-   646                           
-   647                           	psect	intentry
-   648     0004                     __pintentry:	
-   649                           ;incstack = 0
-   650                           ; Regs used in _ISR: [wreg+status,2+status,0+pclath+cstack]
-   651                           
-   652     0004                     interrupt_function:
-   653     007E                     saved_w	set	btemp
-   654     0004  00FE               	movwf	btemp
-   655     0005  0E03               	swapf	3,w
-   656     0006  00F1               	movwf	??_ISR+1
-   657     0007  080A               	movf	10,w
-   658     0008  00F2               	movwf	??_ISR+2
-   659     0009  120A  118A  281F   	ljmp	_ISR
-   660                           
-   661                           	psect	text4
-   662     00B6                     __ptext4:	
-   663 ;; *************** function _UART_Receive *****************
-   664 ;; Defined at:
-   665 ;;		line 61 in file "newmain.c"
-   666 ;; Parameters:    Size  Location     Type
-   667 ;;		None
-   668 ;; Auto vars:     Size  Location     Type
-   669 ;;		None
-   670 ;; Return value:  Size  Location     Type
-   671 ;;                  1    wreg      unsigned char 
-   672 ;; Registers used:
-   673 ;;		wreg
-   674 ;; Tracked objects:
-   675 ;;		On entry : 0/0
-   676 ;;		On exit  : 0/0
-   677 ;;		Unchanged: 0/0
-   678 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   679 ;;      Params:         0       0       0       0       0
-   680 ;;      Locals:         0       0       0       0       0
-   681 ;;      Temps:          0       0       0       0       0
-   682 ;;      Totals:         0       0       0       0       0
-   683 ;;Total ram usage:        0 bytes
-   684 ;; Hardware stack levels used: 1
-   685 ;; This function calls:
-   686 ;;		Nothing
-   687 ;; This function is called by:
-   688 ;;		_ISR
-   689 ;; This function uses a non-reentrant model
-   690 ;;
-   691                           
-   692     00B6                     _UART_Receive:	
-   693                           ;psect for function _UART_Receive
-   694                           
-   695     00B6                     i1l682:	
-   696                           ;incstack = 0
-   697                           ; Regs used in _UART_Receive: [wreg]
+   475                           ;newmain.c: 86: }
+   476     00CD  120A  118A  214B  120A  118A  	fcall	_UART_Init
+   477     00D2                     l845:
+   478     00D2  160B               	bsf	11,4	;volatile
+   479     00D3                     l847:
+   480     00D3  1283               	bcf	3,5	;RP0=0, select bank0
+   481     00D4  1303               	bcf	3,6	;RP1=0, select bank0
+   482     00D5  083A               	movf	_estado,w
+   483     00D6  1903               	btfsc	3,2
+   484     00D7  28D9               	goto	u321
+   485     00D8  28DA               	goto	u320
+   486     00D9                     u321:
+   487     00D9  28EA               	goto	l853
+   488     00DA                     u320:
+   489     00DA                     l849:
+   490     00DA  3001               	movlw	(low ((STR_1-__stringbase)| (0+32768)))& (0+255)
+   491     00DB  00B2               	movwf	UART_Transmit_String@a
+   492     00DC  3080               	movlw	128
+   493     00DD  00B3               	movwf	UART_Transmit_String@a+1
+   494     00DE  3012               	movlw	18
+   495     00DF  00B4               	movwf	UART_Transmit_String@size
+   496     00E0  3000               	movlw	0
+   497     00E1  00B5               	movwf	UART_Transmit_String@size+1
+   498     00E2  120A  118A  2082  120A  118A  	fcall	_UART_Transmit_String
+   499     00E7                     l851:
+   500     00E7  1283               	bcf	3,5	;RP0=0, select bank0
+   501     00E8  1303               	bcf	3,6	;RP1=0, select bank0
+   502     00E9  01BA               	clrf	_estado
+   503     00EA                     l853:
+   504     00EA  0839               	movf	_estado_botao,w
+   505     00EB  1903               	btfsc	3,2
+   506     00EC  28EE               	goto	u331
+   507     00ED  28EF               	goto	u330
+   508     00EE                     u331:
+   509     00EE  28D3               	goto	l847
+   510     00EF                     u330:
+   511     00EF                     l855:
+   512     00EF  3020               	movlw	(low (_str| 0))& (0+255)
+   513     00F0  00B2               	movwf	UART_Transmit_String@a
+   514     00F1  3000               	movlw	0
+   515     00F2  00B3               	movwf	UART_Transmit_String@a+1
+   516     00F3  3012               	movlw	18
+   517     00F4  00B4               	movwf	UART_Transmit_String@size
+   518     00F5  3000               	movlw	0
+   519     00F6  00B5               	movwf	UART_Transmit_String@size+1
+   520     00F7  120A  118A  2082  120A  118A  	fcall	_UART_Transmit_String
+   521     00FC                     l857:
+   522     00FC  1283               	bcf	3,5	;RP0=0, select bank0
+   523     00FD  1303               	bcf	3,6	;RP1=0, select bank0
+   524     00FE  01B9               	clrf	_estado_botao
+   525     00FF  28D3               	goto	l847
+   526     0100  120A  118A  280C   	ljmp	start
+   527     0103                     __end_of_main:
+   528                           
+   529                           	psect	text1
+   530     0082                     __ptext1:	
+   531 ;; *************** function _UART_Transmit_String *****************
+   532 ;; Defined at:
+   533 ;;		line 51 in file "newmain.c"
+   534 ;; Parameters:    Size  Location     Type
+   535 ;;  a               2    0[BANK0 ] PTR unsigned char 
+   536 ;;		 -> str(18), STR_1(19), 
+   537 ;;  size            2    2[BANK0 ] int 
+   538 ;; Auto vars:     Size  Location     Type
+   539 ;;  i               2    6[COMMON] int 
+   540 ;; Return value:  Size  Location     Type
+   541 ;;                  1    wreg      void 
+   542 ;; Registers used:
+   543 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+   544 ;; Tracked objects:
+   545 ;;		On entry : 0/0
+   546 ;;		On exit  : 0/0
+   547 ;;		Unchanged: 0/0
+   548 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   549 ;;      Params:         0       4       0       0       0
+   550 ;;      Locals:         2       0       0       0       0
+   551 ;;      Temps:          0       3       0       0       0
+   552 ;;      Totals:         2       7       0       0       0
+   553 ;;Total ram usage:        9 bytes
+   554 ;; Hardware stack levels used: 1
+   555 ;; Hardware stack levels required when called: 3
+   556 ;; This function calls:
+   557 ;;		_UART_Transmit_Char
+   558 ;; This function is called by:
+   559 ;;		_main
+   560 ;; This function uses a non-reentrant model
+   561 ;;
+   562                           
+   563     0082                     _UART_Transmit_String:	
+   564                           ;psect for function _UART_Transmit_String
+   565                           
+   566     0082                     l829:	
+   567                           ;incstack = 0
+   568                           ; Regs used in _UART_Transmit_String: [wreg-fsr0h+status,2+status,0+btemp+1+pclath+cstac
+      +                          k]
+   569                           
+   570                           
+   571                           ;newmain.c: 52:     if(RCIF == 1){
+   572     0082  01F6               	clrf	UART_Transmit_String@i
+   573     0083  01F7               	clrf	UART_Transmit_String@i+1
+   574     0084  28B4               	goto	l837
+   575     0085                     l831:
+   576                           
+   577                           ;newmain.c: 53:         UART_RX_Buffer = UART_Receive();
+   578     0085  0876               	movf	UART_Transmit_String@i,w
+   579     0086  1283               	bcf	3,5	;RP0=0, select bank0
+   580     0087  1303               	bcf	3,6	;RP1=0, select bank0
+   581     0088  0732               	addwf	UART_Transmit_String@a,w
+   582     0089  00B7               	movwf	??_UART_Transmit_String+1
+   583     008A  0833               	movf	UART_Transmit_String@a+1,w
+   584     008B  00B6               	movwf	??_UART_Transmit_String
+   585     008C  1803               	skipnc
+   586     008D  0AB6               	incf	??_UART_Transmit_String,f
+   587     008E  1FF6               	btfss	UART_Transmit_String@i,7
+   588     008F  2891               	goto	u300
+   589     0090  03B6               	decf	??_UART_Transmit_String,f
+   590     0091                     u300:
+   591     0091  1283               	bcf	3,5	;RP0=0, select bank0
+   592     0092  1303               	bcf	3,6	;RP1=0, select bank0
+   593     0093  0836               	movf	??_UART_Transmit_String,w
+   594     0094  00B8               	movwf	??_UART_Transmit_String+2
+   595     0095  0838               	movf	??_UART_Transmit_String+2,w
+   596     0096  00FF               	movwf	btemp+1
+   597     0097  0837               	movf	??_UART_Transmit_String+1,w
+   598     0098  0084               	movwf	4
+   599     0099  120A  118A  2103  120A  118A  	fcall	stringtab
+   600     009E  120A  118A  215C  120A  118A  	fcall	_UART_Transmit_Char
+   601     00A3                     l833:
+   602                           
+   603                           ;newmain.c: 54:         if(UART_RX_Buffer == 'f' & (PORTBbits.RB1 == 1))
+   604     00A3  3007               	movlw	7
+   605     00A4  1283               	bcf	3,5	;RP0=0, select bank0
+   606     00A5  1303               	bcf	3,6	;RP1=0, select bank0
+   607     00A6  00B7               	movwf	??_UART_Transmit_String+1
+   608     00A7  307C               	movlw	124
+   609     00A8  00B6               	movwf	??_UART_Transmit_String
+   610     00A9                     u347:
+   611     00A9  0BB6               	decfsz	??_UART_Transmit_String,f
+   612     00AA  28A9               	goto	u347
+   613     00AB  0BB7               	decfsz	??_UART_Transmit_String+1,f
+   614     00AC  28A9               	goto	u347
+   615     00AD  0000               	nop
+   616     00AE                     l835:
+   617                           
+   618                           ;newmain.c: 55:             PORTBbits.RB1 = 0;
+   619     00AE  3001               	movlw	1
+   620     00AF  07F6               	addwf	UART_Transmit_String@i,f
+   621     00B0  1803               	skipnc
+   622     00B1  0AF7               	incf	UART_Transmit_String@i+1,f
+   623     00B2  3000               	movlw	0
+   624     00B3  07F7               	addwf	UART_Transmit_String@i+1,f
+   625     00B4                     l837:
+   626     00B4  0877               	movf	UART_Transmit_String@i+1,w
+   627     00B5  3A80               	xorlw	128
+   628     00B6  1283               	bcf	3,5	;RP0=0, select bank0
+   629     00B7  1303               	bcf	3,6	;RP1=0, select bank0
+   630     00B8  00B6               	movwf	??_UART_Transmit_String
+   631     00B9  0835               	movf	UART_Transmit_String@size+1,w
+   632     00BA  3A80               	xorlw	128
+   633     00BB  0236               	subwf	??_UART_Transmit_String,w
+   634     00BC  1D03               	skipz
+   635     00BD  28C0               	goto	u315
+   636     00BE  0834               	movf	UART_Transmit_String@size,w
+   637     00BF  0276               	subwf	UART_Transmit_String@i,w
+   638     00C0                     u315:
+   639     00C0  1C03               	skipc
+   640     00C1  28C3               	goto	u311
+   641     00C2  28C4               	goto	u310
+   642     00C3                     u311:
+   643     00C3  2885               	goto	l831
+   644     00C4                     u310:
+   645     00C4                     l74:
+   646     00C4  0008               	return
+   647     00C5                     __end_of_UART_Transmit_String:
+   648                           
+   649                           	psect	text2
+   650     015C                     __ptext2:	
+   651 ;; *************** function _UART_Transmit_Char *****************
+   652 ;; Defined at:
+   653 ;;		line 45 in file "newmain.c"
+   654 ;; Parameters:    Size  Location     Type
+   655 ;;  a               1    wreg     unsigned char 
+   656 ;; Auto vars:     Size  Location     Type
+   657 ;;  a               1    5[COMMON] unsigned char 
+   658 ;; Return value:  Size  Location     Type
+   659 ;;                  1    wreg      void 
+   660 ;; Registers used:
+   661 ;;		wreg
+   662 ;; Tracked objects:
+   663 ;;		On entry : 0/0
+   664 ;;		On exit  : 0/0
+   665 ;;		Unchanged: 0/0
+   666 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   667 ;;      Params:         0       0       0       0       0
+   668 ;;      Locals:         1       0       0       0       0
+   669 ;;      Temps:          0       0       0       0       0
+   670 ;;      Totals:         1       0       0       0       0
+   671 ;;Total ram usage:        1 bytes
+   672 ;; Hardware stack levels used: 1
+   673 ;; Hardware stack levels required when called: 2
+   674 ;; This function calls:
+   675 ;;		Nothing
+   676 ;; This function is called by:
+   677 ;;		_UART_Transmit_String
+   678 ;; This function uses a non-reentrant model
+   679 ;;
+   680                           
+   681     015C                     _UART_Transmit_Char:	
+   682                           ;psect for function _UART_Transmit_Char
+   683                           
+   684                           
+   685                           ;incstack = 0
+   686                           ; Regs used in _UART_Transmit_Char: [wreg]
+   687                           ;UART_Transmit_Char@a stored from wreg
+   688     015C  00F5               	movwf	UART_Transmit_Char@a
+   689     015D                     l827:
+   690                           
+   691                           ;newmain.c: 46:     while(!RCIF);
+   692     015D  0875               	movf	UART_Transmit_Char@a,w
+   693     015E  1283               	bcf	3,5	;RP0=0, select bank0
+   694     015F  1303               	bcf	3,6	;RP1=0, select bank0
+   695     0160  0099               	movwf	25	;volatile
+   696     0161                     l65:	
+   697                           ;newmain.c: 47:     RCIF=0;
    698                           
-   699     00B6                     i1l63:	
-   700                           ;newmain.c: 63:         RCIF = 0;
-   701                           
-   702     00B6  1283               	bcf	3,5	;RP0=0, select bank0
-   703     00B7  1303               	bcf	3,6	;RP1=0, select bank0
-   704     00B8  1E8C               	btfss	12,5	;volatile
-   705     00B9  28BB               	goto	u2_21
-   706     00BA  28BC               	goto	u2_20
-   707     00BB                     u2_21:
-   708     00BB  28B6               	goto	i1l63
-   709     00BC                     u2_20:
-   710     00BC                     i1l65:
-   711                           
-   712                           ;newmain.c: 64:     }
-   713     00BC  128C               	bcf	12,5	;volatile
-   714     00BD                     i1l684:
-   715                           
-   716                           ;newmain.c: 65: }
-   717     00BD  081A               	movf	26,w	;volatile
-   718     00BE                     i1l66:
-   719     00BE  0008               	return
-   720     00BF                     __end_of_UART_Receive:
-   721     007E                     btemp	set	126	;btemp
-   722     007E                     wtemp0	set	126
-   723                           
-   724                           	psect	config
-   725                           
-   726                           ;Config register CONFIG @ 0x2007
-   727                           ;	Oscillator Selection bits
-   728                           ;	FOSC = HS, HS oscillator
-   729                           ;	Watchdog Timer Enable bit
-   730                           ;	WDTE = OFF, WDT disabled
-   731                           ;	Power-up Timer Enable bit
-   732                           ;	PWRTE = OFF, PWRT disabled
-   733                           ;	Brown-out Reset Enable bit
-   734                           ;	BOREN = ON, BOR enabled
-   735                           ;	Low-Voltage (Single-Supply) In-Circuit Serial Programming Enable bit
-   736                           ;	LVP = OFF, RB3 is digital I/O, HV on MCLR must be used for programming
-   737                           ;	Data EEPROM Memory Code Protection bit
-   738                           ;	CPD = OFF, Data EEPROM code protection off
-   739                           ;	Flash Program Memory Write Enable bits
-   740                           ;	WRT = OFF, Write protection off; all program memory may be written to by EECON control
-   741                           ;	In-Circuit Debugger Mode bit
-   742                           ;	DEBUG = 0x1, unprogrammed default
-   743                           ;	Flash Program Memory Code Protection bit
-   744                           ;	CP = OFF, Code protection off
-   745     2007                     	org	8199
-   746     2007  3F7A               	dw	16250
+   699     0161  1E0C               	btfss	12,4	;volatile
+   700     0162  2964               	goto	u291
+   701     0163  2965               	goto	u290
+   702     0164                     u291:
+   703     0164  2961               	goto	l65
+   704     0165                     u290:
+   705     0165                     l67:
+   706                           
+   707                           ;newmain.c: 48:     return RCREG;
+   708     0165  120C               	bcf	12,4	;volatile
+   709     0166                     l68:
+   710     0166  0008               	return
+   711     0167                     __end_of_UART_Transmit_Char:
+   712                           
+   713                           	psect	text3
+   714     014B                     __ptext3:	
+   715 ;; *************** function _UART_Init *****************
+   716 ;; Defined at:
+   717 ;;		line 36 in file "newmain.c"
+   718 ;; Parameters:    Size  Location     Type
+   719 ;;		None
+   720 ;; Auto vars:     Size  Location     Type
+   721 ;;		None
+   722 ;; Return value:  Size  Location     Type
+   723 ;;                  1    wreg      void 
+   724 ;; Registers used:
+   725 ;;		wreg
+   726 ;; Tracked objects:
+   727 ;;		On entry : 0/0
+   728 ;;		On exit  : 0/0
+   729 ;;		Unchanged: 0/0
+   730 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   731 ;;      Params:         0       0       0       0       0
+   732 ;;      Locals:         0       0       0       0       0
+   733 ;;      Temps:          0       0       0       0       0
+   734 ;;      Totals:         0       0       0       0       0
+   735 ;;Total ram usage:        0 bytes
+   736 ;; Hardware stack levels used: 1
+   737 ;; Hardware stack levels required when called: 2
+   738 ;; This function calls:
+   739 ;;		Nothing
+   740 ;; This function is called by:
+   741 ;;		_main
+   742 ;; This function uses a non-reentrant model
+   743 ;;
+   744                           
+   745     014B                     _UART_Init:	
+   746                           ;psect for function _UART_Init
+   747                           
+   748     014B                     l771:	
+   749                           ;incstack = 0
+   750                           ; Regs used in _UART_Init: [wreg]
+   751                           
+   752                           
+   753                           ;newmain.c: 38: void UART_Transmit_String(uint8_t *a,int size){
+   754     014B  3020               	movlw	32
+   755     014C  1683               	bsf	3,5	;RP0=1, select bank1
+   756     014D  1303               	bcf	3,6	;RP1=0, select bank1
+   757     014E  0098               	movwf	24	;volatile
+   758                           
+   759                           ;newmain.c: 39:     for(int i = 0; i < size; i++){
+   760     014F  3090               	movlw	144
+   761     0150  1283               	bcf	3,5	;RP0=0, select bank0
+   762     0151  1303               	bcf	3,6	;RP1=0, select bank0
+   763     0152  0098               	movwf	24	;volatile
+   764                           
+   765                           ;newmain.c: 40:         UART_Transmit_Char(a[i]);
+   766     0153  3020               	movlw	32
+   767     0154  1683               	bsf	3,5	;RP0=1, select bank1
+   768     0155  1303               	bcf	3,6	;RP1=0, select bank1
+   769     0156  0099               	movwf	25	;volatile
+   770                           
+   771                           ;newmain.c: 41:         _delay((unsigned long)((1)*(20000000/4000.0)));
+   772     0157  30C0               	movlw	192
+   773     0158  008B               	movwf	11	;volatile
+   774                           
+   775                           ;newmain.c: 42:     }
+   776     0159  3020               	movlw	32
+   777     015A  008C               	movwf	12	;volatile
+   778     015B                     l62:
+   779     015B  0008               	return
+   780     015C                     __end_of_UART_Init:
+   781                           
+   782                           	psect	text4
+   783     0029                     __ptext4:	
+   784 ;; *************** function _ISR *****************
+   785 ;; Defined at:
+   786 ;;		line 64 in file "newmain.c"
+   787 ;; Parameters:    Size  Location     Type
+   788 ;;		None
+   789 ;; Auto vars:     Size  Location     Type
+   790 ;;		None
+   791 ;; Return value:  Size  Location     Type
+   792 ;;                  1    wreg      void 
+   793 ;; Registers used:
+   794 ;;		wreg, status,2, status,0, pclath, cstack
+   795 ;; Tracked objects:
+   796 ;;		On entry : 0/0
+   797 ;;		On exit  : 0/0
+   798 ;;		Unchanged: 0/0
+   799 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   800 ;;      Params:         0       0       0       0       0
+   801 ;;      Locals:         0       0       0       0       0
+   802 ;;      Temps:          5       0       0       0       0
+   803 ;;      Totals:         5       0       0       0       0
+   804 ;;Total ram usage:        5 bytes
+   805 ;; Hardware stack levels used: 1
+   806 ;; Hardware stack levels required when called: 1
+   807 ;; This function calls:
+   808 ;;		_UART_Receive
+   809 ;; This function is called by:
+   810 ;;		Interrupt level 1
+   811 ;; This function uses a non-reentrant model
+   812 ;;
+   813                           
+   814     0029                     _ISR:	
+   815                           ;psect for function _ISR
+   816                           
+   817     0029                     i1l789:
+   818                           
+   819                           ;newmain.c: 65:     }
+   820     0029  1283               	bcf	3,5	;RP0=0, select bank0
+   821     002A  1303               	bcf	3,6	;RP1=0, select bank0
+   822     002B  1E8C               	btfss	12,5	;volatile
+   823     002C  282E               	goto	u19_21
+   824     002D  282F               	goto	u19_20
+   825     002E                     u19_21:
+   826     002E  2866               	goto	i1l85
+   827     002F                     u19_20:
+   828     002F                     i1l791:
+   829                           
+   830                           ;newmain.c: 66: }
+   831     002F  120A  118A  2167  120A  118A  	fcall	_UART_Receive
+   832     0034  00F8               	movwf	_UART_RX_Buffer
+   833     0035                     i1l793:
+   834                           
+   835                           ;newmain.c: 67: 
+   836     0035  1283               	bcf	3,5	;RP0=0, select bank0
+   837     0036  1303               	bcf	3,6	;RP1=0, select bank0
+   838     0037  1886               	btfsc	6,1	;volatile
+   839     0038  283A               	goto	u20_21
+   840     0039  283C               	goto	u20_20
+   841     003A                     u20_21:
+   842     003A  3001               	movlw	1
+   843     003B  283D               	goto	u20_22
+   844     003C                     u20_20:
+   845     003C  3000               	movlw	0
+   846     003D                     u20_22:
+   847     003D  00F0               	movwf	??_ISR
+   848     003E  3066               	movlw	102
+   849     003F  0678               	xorwf	_UART_RX_Buffer,w
+   850     0040  1903               	btfsc	3,2
+   851     0041  2843               	goto	u21_21
+   852     0042  2845               	goto	u21_20
+   853     0043                     u21_21:
+   854     0043  3001               	movlw	1
+   855     0044  2846               	goto	u21_22
+   856     0045                     u21_20:
+   857     0045  3000               	movlw	0
+   858     0046                     u21_22:
+   859     0046  0570               	andwf	??_ISR,w
+   860     0047  3800               	iorlw	0
+   861     0048  1903               	skipnz
+   862     0049  284B               	goto	u22_21
+   863     004A  284C               	goto	u22_20
+   864     004B                     u22_21:
+   865     004B  284D               	goto	i1l797
+   866     004C                     u22_20:
+   867     004C                     i1l795:
+   868                           
+   869                           ;newmain.c: 68: void main(void) {
+   870     004C  1086               	bcf	6,1	;volatile
+   871     004D                     i1l797:
+   872                           
+   873                           ;newmain.c: 69:   TRISC6=1;
+   874     004D  1C86               	btfss	6,1	;volatile
+   875     004E  2850               	goto	u23_21
+   876     004F  2852               	goto	u23_20
+   877     0050                     u23_21:
+   878     0050  3001               	movlw	1
+   879     0051  2853               	goto	u23_22
+   880     0052                     u23_20:
+   881     0052  3000               	movlw	0
+   882     0053                     u23_22:
+   883     0053  00F0               	movwf	??_ISR
+   884     0054  306E               	movlw	110
+   885     0055  0678               	xorwf	_UART_RX_Buffer,w
+   886     0056  1903               	btfsc	3,2
+   887     0057  2859               	goto	u24_21
+   888     0058  285B               	goto	u24_20
+   889     0059                     u24_21:
+   890     0059  3001               	movlw	1
+   891     005A  285C               	goto	u24_22
+   892     005B                     u24_20:
+   893     005B  3000               	movlw	0
+   894     005C                     u24_22:
+   895     005C  0570               	andwf	??_ISR,w
+   896     005D  3800               	iorlw	0
+   897     005E  1903               	skipnz
+   898     005F  2861               	goto	u25_21
+   899     0060  2862               	goto	u25_20
+   900     0061                     u25_21:
+   901     0061  2863               	goto	i1l87
+   902     0062                     u25_20:
+   903     0062                     i1l799:
+   904                           
+   905                           ;newmain.c: 70:   TRISC7=1;
+   906     0062  1486               	bsf	6,1	;volatile
+   907     0063                     i1l87:
+   908                           
+   909                           ;newmain.c: 71:   TRISB = 0X00;
+   910     0063  01BA               	clrf	_estado
+   911     0064  0ABA               	incf	_estado,f
+   912                           
+   913                           ;newmain.c: 72:   PORTB = 0x00;
+   914     0065  128C               	bcf	12,5	;volatile
+   915     0066                     i1l85:	
+   916                           ;newmain.c: 73:   UART_Init();
+   917                           
+   918                           
+   919                           ;newmain.c: 74:   INTE = 1;
+   920     0066  1C8B               	btfss	11,1	;volatile
+   921     0067  2869               	goto	u26_21
+   922     0068  286A               	goto	u26_20
+   923     0069                     u26_21:
+   924     0069  287B               	goto	i1l89
+   925     006A                     u26_20:
+   926     006A                     i1l801:
+   927                           
+   928                           ;newmain.c: 75:   while(1)
+   929     006A  3003               	movlw	3
+   930     006B  00F2               	movwf	??_ISR+2
+   931     006C  3008               	movlw	8
+   932     006D  00F1               	movwf	??_ISR+1
+   933     006E  3077               	movlw	119
+   934     006F  00F0               	movwf	??_ISR
+   935     0070                     u35_27:
+   936     0070  0BF0               	decfsz	??_ISR,f
+   937     0071  2870               	goto	u35_27
+   938     0072  0BF1               	decfsz	??_ISR+1,f
+   939     0073  2870               	goto	u35_27
+   940     0074  0BF2               	decfsz	??_ISR+2,f
+   941     0075  2870               	goto	u35_27
+   942     0076                     i1l803:
+   943                           
+   944                           ;newmain.c: 76:   {
+   945     0076  1283               	bcf	3,5	;RP0=0, select bank0
+   946     0077  1303               	bcf	3,6	;RP1=0, select bank0
+   947     0078  01B9               	clrf	_estado_botao
+   948     0079  0AB9               	incf	_estado_botao,f
+   949     007A                     i1l805:
+   950                           
+   951                           ;newmain.c: 77:     if(estado){
+   952     007A  108B               	bcf	11,1	;volatile
+   953     007B                     i1l89:
+   954     007B  0874               	movf	??_ISR+4,w
+   955     007C  008A               	movwf	10
+   956     007D  0E73               	swapf	??_ISR+3,w
+   957     007E  0083               	movwf	3
+   958     007F  0EFE               	swapf	btemp,f
+   959     0080  0E7E               	swapf	btemp,w
+   960     0081  0009               	retfie
+   961     0082                     __end_of_ISR:
+   962                           
+   963                           	psect	intentry
+   964     0004                     __pintentry:	
+   965                           ;incstack = 0
+   966                           ; Regs used in _ISR: [wreg+status,2+status,0+pclath+cstack]
+   967                           
+   968     0004                     interrupt_function:
+   969     007E                     saved_w	set	btemp
+   970     0004  00FE               	movwf	btemp
+   971     0005  0E03               	swapf	3,w
+   972     0006  00F3               	movwf	??_ISR+3
+   973     0007  080A               	movf	10,w
+   974     0008  00F4               	movwf	??_ISR+4
+   975     0009  120A  118A  2829   	ljmp	_ISR
+   976                           
+   977                           	psect	text5
+   978     0167                     __ptext5:	
+   979 ;; *************** function _UART_Receive *****************
+   980 ;; Defined at:
+   981 ;;		line 58 in file "newmain.c"
+   982 ;; Parameters:    Size  Location     Type
+   983 ;;		None
+   984 ;; Auto vars:     Size  Location     Type
+   985 ;;		None
+   986 ;; Return value:  Size  Location     Type
+   987 ;;                  1    wreg      unsigned char 
+   988 ;; Registers used:
+   989 ;;		wreg
+   990 ;; Tracked objects:
+   991 ;;		On entry : 0/0
+   992 ;;		On exit  : 0/0
+   993 ;;		Unchanged: 0/0
+   994 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   995 ;;      Params:         0       0       0       0       0
+   996 ;;      Locals:         0       0       0       0       0
+   997 ;;      Temps:          0       0       0       0       0
+   998 ;;      Totals:         0       0       0       0       0
+   999 ;;Total ram usage:        0 bytes
+  1000 ;; Hardware stack levels used: 1
+  1001 ;; This function calls:
+  1002 ;;		Nothing
+  1003 ;; This function is called by:
+  1004 ;;		_ISR
+  1005 ;; This function uses a non-reentrant model
+  1006 ;;
+  1007                           
+  1008     0167                     _UART_Receive:	
+  1009                           ;psect for function _UART_Receive
+  1010                           
+  1011     0167                     i1l783:	
+  1012                           ;incstack = 0
+  1013                           ; Regs used in _UART_Receive: [wreg]
+  1014                           
+  1015     0167                     i1l77:	
+  1016                           ;newmain.c: 59:         RCIF = 0;
+  1017                           
+  1018     0167  1283               	bcf	3,5	;RP0=0, select bank0
+  1019     0168  1303               	bcf	3,6	;RP1=0, select bank0
+  1020     0169  1E8C               	btfss	12,5	;volatile
+  1021     016A  296C               	goto	u18_21
+  1022     016B  296D               	goto	u18_20
+  1023     016C                     u18_21:
+  1024     016C  2967               	goto	i1l77
+  1025     016D                     u18_20:
+  1026     016D                     i1l79:
+  1027                           
+  1028                           ;newmain.c: 60:     }
+  1029     016D  128C               	bcf	12,5	;volatile
+  1030     016E                     i1l785:
+  1031                           
+  1032                           ;newmain.c: 61:     if (INTF == 1) {
+  1033     016E  081A               	movf	26,w	;volatile
+  1034     016F                     i1l80:
+  1035     016F  0008               	return
+  1036     0170                     __end_of_UART_Receive:
+  1037     007E                     btemp	set	126	;btemp
+  1038     007E                     wtemp0	set	126
+  1039                           
+  1040                           	psect	config
+  1041                           
+  1042                           ;Config register CONFIG @ 0x2007
+  1043                           ;	Oscillator Selection bits
+  1044                           ;	FOSC = HS, HS oscillator
+  1045                           ;	Watchdog Timer Enable bit
+  1046                           ;	WDTE = OFF, WDT disabled
+  1047                           ;	Power-up Timer Enable bit
+  1048                           ;	PWRTE = OFF, PWRT disabled
+  1049                           ;	Brown-out Reset Enable bit
+  1050                           ;	BOREN = ON, BOR enabled
+  1051                           ;	Low-Voltage (Single-Supply) In-Circuit Serial Programming Enable bit
+  1052                           ;	LVP = OFF, RB3 is digital I/O, HV on MCLR must be used for programming
+  1053                           ;	Data EEPROM Memory Code Protection bit
+  1054                           ;	CPD = OFF, Data EEPROM code protection off
+  1055                           ;	Flash Program Memory Write Enable bits
+  1056                           ;	WRT = OFF, Write protection off; all program memory may be written to by EECON control
+  1057                           ;	In-Circuit Debugger Mode bit
+  1058                           ;	DEBUG = 0x1, unprogrammed default
+  1059                           ;	Flash Program Memory Code Protection bit
+  1060                           ;	CP = OFF, Code protection off
+  1061     2007                     	org	8199
+  1062     2007  3F7A               	dw	16250
 
 Data Sizes:
-    Strings     12
+    Strings     19
     Constant    0
-    Data        2
-    BSS         0
+    Data        19
+    BSS         2
     Persistent  0
     Stack       0
 
 Auto Spaces:
     Space          Size  Autos    Used
-    COMMON           14      7       9
-    BANK0            80      0       0
+    COMMON           14      8       9
+    BANK0            80      7      27
     BANK1            80      0       0
     BANK3            96      0       0
     BANK2            96      0       0
 
 Pointer List with Targets:
 
-    str	PTR unsigned char  size(1) Largest target is 12
-		 -> STR_1(CODE[12]), 
+    UART_Transmit_String@a	PTR unsigned char  size(2) Largest target is 19
+		 -> str(BANK0[18]), STR_1(CODE[19]), 
 
 
 Critical Paths under _main in COMMON
 
-    _main->_UART_Transmit_Char
+    _main->_UART_Transmit_String
+    _UART_Transmit_String->_UART_Transmit_Char
 
 Critical Paths under _ISR in COMMON
 
@@ -791,7 +1109,7 @@ Critical Paths under _ISR in COMMON
 
 Critical Paths under _main in BANK0
 
-    None.
+    _main->_UART_Transmit_String
 
 Critical Paths under _ISR in BANK0
 
@@ -826,34 +1144,39 @@ Call Graph Tables:
  ---------------------------------------------------------------------------------
  (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
  ---------------------------------------------------------------------------------
- (0) _main                                                 3     3      0      15
-                                              4 COMMON     3     3      0
+ (0) _main                                                 0     0      0     521
                           _UART_Init
+               _UART_Transmit_String
+ ---------------------------------------------------------------------------------
+ (1) _UART_Transmit_String                                 9     5      4     521
+                                              6 COMMON     2     2      0
+                                              0 BANK0      7     3      4
                  _UART_Transmit_Char
  ---------------------------------------------------------------------------------
- (1) _UART_Transmit_Char                                   1     1      0      15
-                                              3 COMMON     1     1      0
+ (2) _UART_Transmit_Char                                   1     1      0      31
+                                              5 COMMON     1     1      0
  ---------------------------------------------------------------------------------
  (1) _UART_Init                                            0     0      0       0
  ---------------------------------------------------------------------------------
- Estimated maximum stack depth 1
+ Estimated maximum stack depth 2
  ---------------------------------------------------------------------------------
  (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
  ---------------------------------------------------------------------------------
- (2) _ISR                                                  3     3      0       0
-                                              0 COMMON     3     3      0
+ (3) _ISR                                                  5     5      0       0
+                                              0 COMMON     5     5      0
                        _UART_Receive
  ---------------------------------------------------------------------------------
- (3) _UART_Receive                                         0     0      0       0
+ (4) _UART_Receive                                         0     0      0       0
  ---------------------------------------------------------------------------------
- Estimated maximum stack depth 3
+ Estimated maximum stack depth 4
  ---------------------------------------------------------------------------------
 
  Call Graph Graphs:
 
  _main (ROOT)
    _UART_Init
-   _UART_Transmit_Char
+   _UART_Transmit_String
+     _UART_Transmit_Char
 
  _ISR (ROOT)
    _UART_Receive
@@ -872,61 +1195,77 @@ BANK1               50      0       0       7        0.0%
 BITBANK1            50      0       0       6        0.0%
 SFR1                 0      0       0       2        0.0%
 BITSFR1              0      0       0       2        0.0%
-BANK0               50      0       0       5        0.0%
+BANK0               50      7      1B       5       33.8%
 BITBANK0            50      0       0       4        0.0%
 SFR0                 0      0       0       1        0.0%
 BITSFR0              0      0       0       1        0.0%
-COMMON               E      7       9       1       64.3%
+COMMON               E      8       9       1       64.3%
 BITCOMMON            E      0       0       0        0.0%
 CODE                 0      0       0       0        0.0%
-DATA                 0      0       9      12        0.0%
-ABS                  0      0       9       3        0.0%
+DATA                 0      0      24      12        0.0%
+ABS                  0      0      24       3        0.0%
 NULL                 0      0       0       0        0.0%
 STACK                0      0       0       2        0.0%
 EEDATA             100      0       0       0        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.41 build 20230208172133 
-Symbol Table                                                                                   Tue Jun 18 12:41:38 2024
+Symbol Table                                                                                   Wed Jun 19 10:08:46 2024
 
-                         pc 0002                          l51 00B0                          l53 00B4  
-                        l54 00B5                          l48 00AA                          u10 00B4  
-                        u11 00B3                          fsr 0004                         l740 0077  
-                       l732 0064                         l734 0068                         l680 00AC  
-                       l736 006C                         l738 0071                         l678 009A  
-                       _GIE 005F                         u117 007D                         _ISR 001F  
-                       _str 0077                        ?_ISR 0070                        STR_1 008E  
-                      _BRGH 04C2                        _CREN 00C4                        _PIE1 008C  
-                      _PEIE 005E                        _RCIE 0465                        _RCIF 0065  
-                      i1l63 00B6                        i1l65 00BC                        i1l66 00BE  
-                      i1l76 005D                        _SPEN 00C7                        _TXIF 0064  
-                      _SYNC 04C4                        u2_20 00BC                        u2_21 00BB  
-                      u4_20 0025                        u4_21 0024                        u5_20 0033  
-                      u5_21 0031                        u5_22 0034                        u6_20 003C  
-                      u6_21 003A                        u6_22 003D                        u7_20 0043  
-                      u7_21 0042                        u8_20 004A                        u8_21 0048  
-                      u8_22 004B                        u9_20 0053                        u9_21 0051  
-                      u9_22 0054                        _main 0064                        btemp 007E  
-                      start 000C  __end_of_UART_Transmit_Char 00B6                       ??_ISR 0070  
-                     ?_main 0070                       i1l720 0025                       i1l730 005C  
-                     i1l722 002B                       i1l724 0043                       i1l726 0044  
-                     i1l718 001F                       i1l728 005A                       i1l682 00B6  
-                     i1l684 00BD                       _RCREG 001A                       u10_20 005A  
-                     u10_21 0059                       _RCSTA 0018                       _SPBRG 0099  
-                     _PORTB 0006                       _TRISB 0086                       _TXREG 0019  
-                     _TXSTA 0098                       pclath 000A                       status 0003  
-                     wtemp0 007E             __initialization 000F                __end_of_main 0088  
-                    ??_main 0074                      _INTCON 000B                      _TRISC6 043E  
-                    _TRISC7 043F           __end_of_UART_Init 00AB                __pdataCOMMON 0077  
-                    saved_w 007E     __end_of__initialization 001B              __pcstackCOMMON 0070  
-                __pmaintext 0064                  __pintentry 0004          _UART_Transmit_Char 00AB  
-            _UART_RX_Buffer 0078         ?_UART_Transmit_Char 0070                  __stringtab 0088  
-             ?_UART_Receive 0070        ??_UART_Transmit_Char 0073                     __ptext1 00AB  
-                   __ptext2 009A                     __ptext3 001F                     __ptext4 00B6  
-      end_of_initialization 001B              ??_UART_Receive 0070                   _UART_Init 009A  
-                ?_UART_Init 0070               __pidataCOMMON 00BF         start_initialization 000F  
-               __end_of_ISR 0064        __end_of_UART_Receive 00BF                   ___latbits 0002  
-               ??_UART_Init 0073                   __pstrings 0088           interrupt_function 0004  
-       UART_Transmit_Char@a 0073                 __stringbase 008D          __end_of__stringtab 008E  
-              _UART_Receive 00B6                    intlevel1 0000                   stringcode 0088  
-                  stringdir 0088                    stringtab 0088  
+                           pc 0002                            l62 015B                            l65 0161  
+                          l74 00C4                            l67 0165                            l68 0166  
+                          fsr 0004                           l831 0085                           l833 00A3  
+                         l841 00C9                           l771 014B                           l827 015D  
+                         l835 00AE                           l851 00E7                           l843 00CD  
+                         l837 00B4                           l829 0082                           l853 00EA  
+                         l845 00D2                           l855 00EF                           l847 00D3  
+                         l839 00C5                           l857 00FC                           l849 00DA  
+                         _GIE 005F                           u300 0091                           u310 00C4  
+                         u311 00C3                           u320 00DA                           u321 00D9  
+                         u330 00EF                           u315 00C0                           u331 00EE  
+                         u290 0165                           u291 0164                           u347 00A9  
+                         _ISR 0029                           fsr0 0004                           _str 0020  
+                         indf 0000                          ?_ISR 0070                          STR_1 0113  
+                        _BRGH 04C2                          _CREN 00C4                          _PIE1 008C  
+                        _PEIE 005E                          _INTE 005C                          _INTF 0059  
+                        _RCIE 0465                          _RCIF 0065                          i1l80 016F  
+                        i1l77 0167                          i1l85 0066                          i1l79 016D  
+                        i1l87 0063                          i1l89 007B                          _SPEN 00C7  
+                        _TXIF 0064                          _SYNC 04C4                          _main 00C5  
+                        btemp 007E                          start 000C    __end_of_UART_Transmit_Char 0167  
+                       ??_ISR 0070                         ?_main 0070                         i1l801 006A  
+                       i1l803 0076                         i1l805 007A                         i1l783 0167  
+                       i1l791 002F                         i1l785 016E                         i1l793 0035  
+                       i1l795 004C                         i1l797 004D                         i1l789 0029  
+                       i1l799 0062                         _RCREG 001A                         _RCSTA 0018  
+                       u20_20 003C                         u20_21 003A                         u20_22 003D  
+                       u21_20 0045                         u21_21 0043                         u21_22 0046  
+                       u22_20 004C                         u22_21 004B                         u23_20 0052  
+                       u23_21 0050                         u23_22 0053                         u24_20 005B  
+                       u24_21 0059                         u24_22 005C                         u25_20 0062  
+                       u25_21 0061                         u18_20 016D                         u26_20 006A  
+                       u18_21 016C                         u26_21 0069                         _SPBRG 0099  
+                       u19_20 002F                         u19_21 002E                         _PORTB 0006  
+                       u35_27 0070                         _TRISB 0086                         _TXREG 0019  
+                       _TXSTA 0098                         pclath 000A                         status 0003  
+                       wtemp0 007E               __initialization 000F                  __end_of_main 0103  
+                      ??_main 0078                        _INTCON 000B                        _TRISC6 043E  
+                      _TRISC7 043F             __end_of_UART_Init 015C                        _estado 003A  
+                __pdataCOMMON 0078                        saved_w 007E       __end_of__initialization 0025  
+              __pcstackCOMMON 0070                  __pidataBANK0 0139  __end_of_UART_Transmit_String 00C5  
+                  __pbssBANK0 0039                    __pmaintext 00C5                    __pintentry 0004  
+          _UART_Transmit_Char 015C                _UART_RX_Buffer 0078           ?_UART_Transmit_Char 0070  
+                  __stringtab 0103                 ?_UART_Receive 0070          ??_UART_Transmit_Char 0075  
+                     __ptext1 0082                       __ptext2 015C                       __ptext3 014B  
+                     __ptext4 0029                       __ptext5 0167          end_of_initialization 0025  
+              ??_UART_Receive 0070          _UART_Transmit_String 0082                     _UART_Init 014B  
+                   _PORTBbits 0006         ?_UART_Transmit_String 0032                    ?_UART_Init 0070  
+               __pidataCOMMON 0170           start_initialization 000F                   __end_of_ISR 0082  
+                  init_fetch0 0126                   __pdataBANK0 0020          __end_of_UART_Receive 0170  
+                _estado_botao 0039                     ___latbits 0002                 __pcstackBANK0 0032  
+      ??_UART_Transmit_String 0036                   ??_UART_Init 0075                     __pstrings 0103  
+    UART_Transmit_String@size 0034             interrupt_function 0004           UART_Transmit_Char@a 0075  
+                 __stringbase 0112            __end_of__stringtab 0113                  _UART_Receive 0167  
+                    init_ram0 012A                      intlevel1 0000                     stringcode 010D  
+       UART_Transmit_String@a 0032         UART_Transmit_String@i 0076                      stringdir 010D  
+                    stringtab 0103  
